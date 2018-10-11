@@ -1,0 +1,32 @@
+#https://leetcode.com/problems/top-k-frequent-elements/
+
+class Solution:
+    def topKFrequent(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        count = {}
+        for num in nums:
+            if num in count:
+                count[num]+=1
+            else:
+                count[num]=1
+        
+        buckets = {}
+        for key in count:
+            if count[key] in buckets:
+                buckets[count[key]].append(key)
+            else:
+                buckets[count[key]] = []
+                buckets[count[key]].append(key)
+        
+        ans= []
+        for x in range(len(nums),0,-1):
+            if x in buckets:
+                for ele in buckets[x]:
+                    ans.append(ele)
+                    if len(ans)==k:
+                        return ans
+        return ans
