@@ -1,0 +1,22 @@
+#https://leetcode.com/problems/teemo-attacking/description/
+
+class Solution:
+    def findPoisonedDuration(self, timeSeries, duration):
+        """
+        :type timeSeries: List[int]
+        :type duration: int
+        :rtype: int
+        """
+        i = 0
+        ans = 0
+        len_ = len(timeSeries)
+        
+        while i < len_:
+            ele = timeSeries[i]
+            end_val = ele + duration
+            while i+1 < len_ and timeSeries[i+1] < end_val:
+                i+=1
+                end_val = timeSeries[i] + duration
+            ans += - ele + timeSeries[i] + duration
+            i+=1
+        return ans
