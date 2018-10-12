@@ -1,0 +1,34 @@
+#https://leetcode.com/problems/jump-game/description/
+
+class Solution:
+    def canJump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        
+        len_ = len(nums)
+        lastpos = len_ - 1
+        
+        for i in range(len_-2,-1,-1):
+            if i + nums[i]>= lastpos:
+                lastpos = i
+                
+        return lastpos==0
+        
+        '''
+        len_ = len(nums)
+        
+        memo = [False]*len_
+        memo[len_-1] = True
+        
+        for i in range(len_-2,-1,-1):
+            max_jump = min(i+nums[i],len_-1)
+            for j in range(max_jump,i,-1):
+                if memo[j]==True:
+                    memo[i] = True
+                    break
+        
+        #print(memo)
+        return memo[0]
+        '''
