@@ -65,6 +65,9 @@ def ans(matrix):
         q = Queue()
 
         checked[i][j] = 1
+        
+        #check it and insert it into que
+        
         q.enqx(i)
         q.enqy(j)
         while not q.isempty():
@@ -72,6 +75,8 @@ def ans(matrix):
             currx = q.deqx()
             curry = q.deqy()
 
+            #remove the top element from the queue
+            #get the breadth for its children, we already know parent nodes breadth
 
             breadth = bfs_mat[currx][curry] + 1
 
@@ -79,6 +84,8 @@ def ans(matrix):
                 return bfs_mat[currx][curry]
 
             #breadth += 1
+            
+            #for each child, mark it as checked, add it to the queue and update its bfs depth
             if currx + 1 < rows and checked[currx + 1][curry] == 0:
                 q.enqx(currx + 1)
                 q.enqy(curry)
