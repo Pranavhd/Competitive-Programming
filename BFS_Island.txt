@@ -1,0 +1,131 @@
+'''
+Given a matrix of 0's and 1's. )'s denote water bodies and 1's denote land. Find the path length of shortest land that connects the 2 given water bodies
+'''
+
+
+class Queue:
+    def __init__(self):
+        self.itemsx = []
+        self.itemsy = []
+
+    def enqx(self, item):
+        self.itemsx.insert(0, item)
+
+    def enqy(self, item):
+        self.itemsy.insert(0, item)
+
+    def deqy(self):
+        return self.itemsy.pop()
+
+    def deqx(self):
+        return self.itemsx.pop()
+
+    def isempty(self):
+        return self.itemsx == [] or self.itemsy == []
+
+
+def ans(matrix):
+    rows = len(matrix)
+    cols = len(matrix[0])
+    memo = [[0 for i in range(cols)] for j in range(rows)]
+
+    def fill(i, j, value):
+        memo[i][j] = value
+        matrix[i][j] = 1
+        if i + 1 < rows and matrix[i + 1][j] == 0:
+            fill(i + 1, j, value)
+        if j - 1 >= 0 and matrix[i][j - 1] == 0:
+            fill(i, j - 1, value)
+        if i - 1 >= 0 and matrix[i - 1][j] == 0:
+            fill(i - 1, j, value)
+        if j + 1 < cols and matrix[i][j + 1] == 0:
+            fill(i, j + 1, value)
+
+    ass1 = 0
+
+    for row_ind, row in enumerate(matrix):
+        for col_ind, col in enumerate(row):
+            if matrix[row_ind][col_ind] == 0:
+                fill(row_ind, col_ind, -1)
+                ass1 = 1
+                break
+        if ass1:
+            break
+
+    for row_ind, row in enumerate(matrix):
+        for col_ind, col in enumerate(row):
+            if matrix[row_ind][col_ind] == 0:
+                fill(row_ind, col_ind, -2)
+
+    checked = [[0 for i in range(cols)] for j in range(rows)]
+    bfs_mat = [[0 for i in range(cols)] for j in range(rows)]
+
+    def bfs(i, j, val, breadth):
+
+        q = Queue()
+
+        checked[i][j] = 1
+        q.enqx(i)
+        q.enqy(j)
+        while not q.isempty():
+
+            currx = q.deqx()
+            curry = q.deqy()
+
+
+            breadth = bfs_mat[currx][curry] + 1
+
+            if memo[currx][curry] == val:
+                return bfs_mat[currx][curry]
+
+            #breadth += 1
+            if currx + 1 < rows and checked[currx + 1][curry] == 0:
+                q.enqx(currx + 1)
+                q.enqy(curry)
+                bfs_mat[currx + 1][curry] = breadth
+                checked[currx + 1][curry] = 1
+            if curry - 1 >= 0 and checked[currx][curry - 1] == 0:
+                q.enqx(currx)
+                q.enqy(curry - 1)
+                bfs_mat[currx][curry - 1] = breadth
+                checked[currx][curry - 1] = 1
+            if currx - 1 >= 0 and checked[currx - 1][curry] == 0:
+                q.enqx(currx - 1)
+                q.enqy(curry)
+                bfs_mat[currx - 1][curry] = breadth
+                checked[currx - 1][curry] = 1
+            if curry + 1 < cols and checked[currx][curry + 1] == 0:
+                q.enqx(currx)
+                q.enqy(curry + 1)
+                bfs_mat[currx][curry + 1] = breadth
+                checked[currx][curry + 1] = 1
+
+
+    done = False
+    for row_ind, row in enumerate(memo):
+        for col_ind, col in enumerate(row):
+            if memo[row_ind][col_ind] == -1 and checked[row_ind][col_ind] == 0:
+                sol = bfs(row_ind, col_ind, -2, 0)
+                done = True
+                break
+        if done:
+            break
+
+    for row in bfs_mat:
+        print(row)
+    return sol - 1
+
+
+matrix = [[0, 1, 1, 1],
+          [1, 1, 1, 1],
+          [1, 1, 1, 1],
+          [1, 0, 1, 1],
+          [1, 1, 1, 1]]
+'''
+
+matrix = [[0, 1, 1],
+          [1, 1, 1],
+          [1, 0, 1,]]
+'''
+
+print(ans(matrix))
