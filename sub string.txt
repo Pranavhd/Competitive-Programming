@@ -1,0 +1,21 @@
+# given a string, find all possible substrings, output the alphabetically sorted answerrs. Return the first and the last element, where the first character is a vowel and last character is not a vowel
+
+def myfunc(s):
+    vowels = ['a', 'e', 'i', 'o,', 'u']
+
+    s = ''.join(sorted(s))
+
+    len_ = len(s)
+    ans = []
+    for i in range(len_):
+        for ele in range(1, len_):
+            min_ = min(i + ele, len_ - 1)
+            if s[i] in vowels and s[min_] not in vowels:
+                ans.append(s[i:min_+1])
+
+
+    print(ans)
+    return ans[0], ans[-1]
+
+
+print(myfunc("aba"))
