@@ -1,0 +1,20 @@
+def myfunc(nums,target):
+
+   hasher = []
+
+   curr_sum = 0
+   len_ = len(nums)
+
+   for i in range(len_):
+       curr_sum += nums[i]
+       if curr_sum == target:
+           print("we found")
+       if curr_sum - target in hasher:
+           print("found")
+       hasher.append(curr_sum)
+
+   print(hasher)
+
+nums = [2,5,6,-1,8,5]
+target = 10
+print(myfunc(nums,target))
