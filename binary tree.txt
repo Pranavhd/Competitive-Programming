@@ -1,0 +1,35 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def levelOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        q = []
+        ans = []
+        level = 0
+        
+        if root==None:
+            return []
+        
+        q.append(root)
+        while len(q)>0:
+            len_ = len(q)
+            sub_ans = []
+            
+            for i in range(len_):
+                ele = q.pop(0)
+                sub_ans.append(ele.val)
+                if ele.left!=None:
+                    q.append(ele.left)
+                if ele.right!=None:
+                    q.append(ele.right)
+            
+            ans.append(sub_ans)
+        return ans
