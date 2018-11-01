@@ -1,0 +1,21 @@
+#https://leetcode.com/problems/kth-largest-element-in-an-array/
+
+import queue as Q
+
+class Solution:
+    def findKthLargest(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        
+        q = Q.PriorityQueue()
+        
+        for ele in nums:
+            q.put(ele)
+            
+            if q.qsize()>k:
+                q.get()
+            
+        return q.get()
