@@ -1,0 +1,14 @@
+#https://leetcode.com/problems/rotate-image/
+
+class Solution:
+    def rotate(self, A):
+        """
+        :type matrix: List[List[int]]
+        :rtype: void Do not return anything, modify matrix in-place instead.
+        """
+        
+        A.reverse()
+        for i in range(len(A)):
+            for j in range(i+1,len(A)):
+                A[i][j], A[j][i] = A[j][i], A[i][j]
+            
