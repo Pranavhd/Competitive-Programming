@@ -1,0 +1,51 @@
+#https://leetcode.com/problems/spiral-matrix/description/
+
+class Solution:
+    def spiralOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+                   
+        ans = []
+        
+        if matrix==[]:
+            return matrix
+
+        rows = len(matrix)
+        cols = len(matrix[0])
+        count = rows*cols
+        
+        frow = -1
+        fcol = -1
+        lrow = rows
+        lcol = cols
+
+        while count>0:
+            frow += 1
+            for i in range(fcol+1,lcol):
+                ans.append(matrix[frow][i])
+                count -= 1
+            if count<=0:
+                break
+            lcol -= 1
+            for i in range(frow+1,lrow):
+                ans.append(matrix[i][lcol])
+                count -= 1
+            if count<=0:
+                break
+            lrow -= 1
+            for i in range(lcol-1,fcol,-1):
+                ans.append(matrix[lrow][i])
+                count -= 1
+            if count<=0:
+                break
+            fcol += 1
+            for i in range(lrow-1,frow,-1):
+                ans.append(matrix[i][fcol])
+                count -= 1
+            if count<=0:
+                break
+
+        return ans
+        
