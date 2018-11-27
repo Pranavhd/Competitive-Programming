@@ -1,0 +1,30 @@
+#https://leetcode.com/problems/merge-intervals/description/
+
+# Definition for an interval.
+# class Interval:
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
+
+import operator
+
+class Solution:
+    def merge(self, intervals):
+        """
+        :type intervals: List[Interval]
+        :rtype: List[Interval]
+        """
+    
+        #intervals.sort(key = lambda x:x[0])
+        #intervals = sorted(intervals, key = lambda x:x.start)
+        #sorted(intervals, key = operator.itemgetter(0))
+        
+        ans = []
+
+        for ele in sorted(intervals,key = lambda x:x.start):
+            if ans and ans[-1].end>=ele.start:
+                ans[-1].end = max(ans[-1].end,ele.end)
+            else:
+                ans.append(ele)
+        
+        return ans
