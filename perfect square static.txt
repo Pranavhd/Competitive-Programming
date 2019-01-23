@@ -1,0 +1,26 @@
+#https://leetcode.com/problems/perfect-squares/description/
+
+class Solution:
+    
+    dp = [0,1,2,3]
+    
+    def numSquares(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """    
+        
+        len_ = len(Solution.dp)
+        if len_ == n+1:
+            return Solution.dp[n]
+        
+        for i in range(4,n+1):
+            if len_<=i:
+                Solution.dp.append(i)
+            
+                j = 1
+                while j*j<=i:
+                    Solution.dp[i] = min(Solution.dp[i],1 + Solution.dp[i-j*j])
+                    j += 1
+                
+        return Solution.dp[n]
