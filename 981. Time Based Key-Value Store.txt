@@ -1,0 +1,45 @@
+#https://leetcode.com/contest/weekly-contest-121/problems/time-based-key-value-store/
+
+class TimeMap(object):
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.dict_key = {}        
+
+    def set(self, key, value, timestamp):
+        """
+        :type key: str
+        :type value: str
+        :type timestamp: int
+        :rtype: None
+        """
+        if key not in self.dict_key:
+            self.dict_key[key] = {}
+        self.dict_key[key][value] = timestamp
+        
+
+    def get(self, key, timestamp):
+        """
+        :type key: str
+        :type timestamp: int
+        :rtype: str
+        """
+        if key not in self.dict_key:
+            return ""
+        maxi = 0
+        rval = ""
+        for keys in self.dict_key[key]:
+            #print(keys,self.dict_key[key][keys] , timestamp, maxi)
+            if self.dict_key[key][keys] <= timestamp and self.dict_key[key][keys] > maxi:
+                maxi = self.dict_key[key][keys]
+                rval = keys
+                
+        return rval
+
+
+# Your TimeMap object will be instantiated and called as such:
+# obj = TimeMap()
+# obj.set(key,value,timestamp)
+# param_2 = obj.get(key,timestamp)
