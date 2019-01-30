@@ -1,0 +1,24 @@
+#https://leetcode.com/contest/weekly-contest-121/problems/minimum-cost-for-tickets/
+
+class Solution(object):
+    def mincostTickets(self, days, costs):
+        """
+        :type days: List[int]
+        :type costs: List[int]
+        :rtype: int
+        """
+        dict_days = {}
+        maxi = 0
+        for day in days:
+            dict_days[day] = 1
+            maxi = max(day,maxi)
+        
+        dict_dp = [0 for i in range(366)]
+        
+        for i in range(maxi+1):
+            if i not in dict_days:
+                dict_dp[i] = dict_dp[i-1]
+            else:
+                dict_dp[i] = min(dict_dp[i-1] + costs[0], dict_dp[max(0,i-7)] + costs[1], dict_dp[max(0,i-30)] + costs[2])
+                
+        return dict_dp[maxi]
