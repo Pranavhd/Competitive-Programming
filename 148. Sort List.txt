@@ -1,0 +1,29 @@
+#https://leetcode.com/problems/sort-list/description/
+
+class Solution:
+    def sortList(self, head):
+        """
+        :type head: ListNode
+        :rtype: ListNode
+        """
+        if head==None:
+            return head
+        
+        result = []
+        p = head
+        
+        while p:
+            result.append(p.val)
+            p = p.next
+            
+        result.sort()
+        
+        head = ListNode(result[0])
+        ans = head
+        
+        for i in result[1:]:
+            listnode = ListNode(i)
+            head.next = listnode
+            head = head.next
+            
+        return ans
