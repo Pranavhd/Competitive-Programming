@@ -1,0 +1,45 @@
+import math
+
+class Solution(object):
+    def calculate(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        
+        len_ = len(s)
+    
+        if len_ == 0:
+            return 0
+
+        stack = []
+        num = 0
+        sign = '+'
+
+        for ind,i in enumerate(s):
+
+            if i.isdigit():
+                num = num*10 + ord(i) - ord('0')
+            if (not i.isdigit() and i!=' ') or ind==len_-1:
+                #print("here")
+                if sign=='+':
+                    #print(num)
+                    stack.append(num)
+                elif sign=='-':
+                    stack.append(-num)
+                elif sign=='*':
+                    stack.append(stack.pop(-1)*num)
+                else:
+                    new_ = int(stack.pop(-1))
+                    print(new_,num)
+                    new_ = int(new_/num)
+                    print(new_,num)
+                    stack.append(new_)
+                sign = i
+                num = 0
+            #print(i,stack) 
+
+        ans = 0
+        for i in stack:
+            ans += int(i)
+        return ans
