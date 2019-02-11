@@ -1,0 +1,19 @@
+class Solution:
+    def findAndReplacePattern(self, words: 'List[str]', pattern: 'str') -> 'List[str]':
+        ans_ = []
+        
+        for word in words:
+            m1 = {}
+            m2 = {}
+            add = 1
+            for w,p in zip(word, pattern):
+                if w not in m1:
+                    m1[w] = p
+                if p not in m2:
+                    m2[p] = w
+                if (m1[w], m2[p]) != (p, w):
+                    add = 0
+            if add == 1:
+                ans_.append(word)
+        
+        return ans_
