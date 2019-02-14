@@ -1,0 +1,27 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def cut(self,root):
+        if root.left!=None:
+            root.left = self.cut(root.left)
+        if root.right!=None:
+            root.right = self.cut(root.right)
+        if root.left == None and root.right == None and root.val == 0:
+            root = None
+            return None
+        return root
+    
+    def pruneTree(self, root):
+        """
+        :type root: TreeNode
+        :rtype: TreeNode
+        """
+        root = self.cut(root)
+        print(root)
+        
+        return root
