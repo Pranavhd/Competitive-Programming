@@ -1,0 +1,15 @@
+class Solution:
+    def minAddToMakeValid(self, S: 'str') -> 'int':
+        ans = 0
+        add = 0
+        for i in S:
+            if ans < 0:
+                add += 1
+                ans += 1
+            if i=='(':
+                ans += 1
+            else:
+                ans -= 1
+        if ans < 0:
+            ans = -1*ans
+        return add + ans
