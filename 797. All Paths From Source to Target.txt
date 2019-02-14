@@ -1,0 +1,17 @@
+class Solution:
+    def allPathsSourceTarget(self, graph: 'List[List[int]]') -> 'List[List[int]]':
+        len_ = len(graph)
+        visited = [0 for i in range(len_)]
+        #graph = [0 for i in range(len_)]
+        
+        def dfs(start, result, path):
+            if start == len_ - 1:
+                path = path + [start]
+                result.append(path)
+                return
+            for each_node in graph[start]:
+                dfs(each_node, result, path + [start])
+            return result               
+        
+        result = dfs(0,[],[])
+        return result
