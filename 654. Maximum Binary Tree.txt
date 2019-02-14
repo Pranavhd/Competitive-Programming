@@ -1,0 +1,44 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def constructMaximumBinaryTree(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: TreeNode
+        """
+        def findroot(arr):
+            if len(arr)==0:
+                return None
+            index, value = max(enumerate(arr), key=operator.itemgetter(1))
+            root = TreeNode(value)
+            root.left = findroot(arr[:index])
+            root.right = findroot(arr[index+1:])
+            return root
+        
+        return findroot(nums)
+        
+        
+        '''
+        index, value = max(enumerate(nums), key=operator.itemgetter(1))
+        root = TreeNode(value)
+        
+        def findroot(root,left,arr,start,end):
+            index, value = max(enumerate(arr), key=operator.itemgetter(1))
+            if index-1>=start
+                lind, lval = findroot(root,1,arr[start:index-1],start,index-1)
+                
+            if to>=index+1
+                findroot(root,0,arr[index+1:len(arr)],index+1,len(arr))
+        
+        lind, lval = findroot(root,1,nums[0:index],0,index-1)
+        root.left = TreeNode(lval)
+        rind, rval = findroot(root,0,nums[index+1:len(nums)],index+1,len(nums))
+        root.right = TreeNode(rval)
+        
+        return root
+        '''
