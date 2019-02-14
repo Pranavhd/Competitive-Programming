@@ -1,0 +1,11 @@
+class Solution:
+    def complexNumberMultiply(self, a: 'str', b: 'str') -> 'str':
+        a_real = int(a.split("+")[0])
+        a_comp = int(a.split('+')[1][:-1])
+        b_real = int(b.split("+")[0])
+        b_comp = int(b.split('+')[1][:-1])
+        
+        ans_real = a_real * b_real + a_comp * b_comp * -1
+        ans_comp = a_real * b_comp + b_real * a_comp
+        
+        return str(ans_real) + "+" + str(ans_comp) + "i"
