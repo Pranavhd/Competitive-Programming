@@ -1,0 +1,11 @@
+class Solution:
+    def maxChunksToSorted(self, arr: List[int]) -> int:
+        ans = 0
+        maxi = - 1
+
+        for ind, ele in enumerate(arr):
+            maxi = max(ele, maxi)
+            if maxi == ind:
+                ans += 1
+
+        return ans
