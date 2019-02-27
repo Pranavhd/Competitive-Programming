@@ -1,0 +1,37 @@
+class TrieNode(object):
+    def __init__(self):
+        self.child = collections.defaultdict(TrieNode)
+        self.value = 0
+
+class MapSum:
+
+    def __init__(self):
+        """
+        Initialize your data structure here.
+        """
+        self.root = TrieNode()
+        self.roots = set()
+
+    def insert(self, word, value):
+        current = self.root
+        if word in self.roots:
+            for letter in word:
+                current = current.child[letter]
+                current.value = value
+        else:
+            for letter in word:
+                current = current.child[letter]
+                current.value += value
+            self.roots.add(word)
+
+    def sum(self, prefix):
+        current = self.root
+        for letter in prefix:
+            current = current.child[letter]
+        return current.value
+
+
+# Your MapSum object will be instantiated and called as such:
+# obj = MapSum()
+# obj.insert(key,val)
+# param_2 = obj.sum(prefix)
