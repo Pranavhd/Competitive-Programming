@@ -1,0 +1,44 @@
+class TrieNode(object):
+    def __init__(self):
+        self.child = collections.defaultdict(TrieNode)
+        self.is_word = False
+
+class Trie(object):
+    def __init__(self):
+        self.root = TrieNode()
+        
+    def insert(self, word):
+        current = self.root
+        for letter in word:
+            current = current.child[letter]
+        current.is_word = True
+    
+    def search(self, prefix):
+        current = self.root
+        word = ""
+        for letter in prefix:
+            current = current.child[letter]
+            if current == None:
+                break
+            word += letter
+            if current.is_word:
+                return word
+        return word
+
+class Solution(object):
+    def replaceWords(self, dict_, sentence):
+        """
+        :type dict: List[str]
+        :type sentence: str
+        :rtype: str
+        """
+        obj = Trie()
+        for word in dict_:
+            obj.insert(word)
+
+        list_ = sentence.split()
+        for ind, word in enumerate(list_):
+            ret_word = obj.search(word)
+            list_[ind] = ret_word
+
+        return " ".join(list_)
