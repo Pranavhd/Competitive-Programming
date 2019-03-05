@@ -1,0 +1,28 @@
+class DSU:
+    def __init__(self):
+        self.parent = list(range(1002))
+        
+    def find(self, x):
+        if self.parent[x]!=x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+    
+    def union(self, x, y):
+        xr = self.find(x)
+        yr = self.find(y)
+        self.parent[xr] = yr 
+
+class Solution(object):
+    def findRedundantConnection(self, edges):
+        """
+        :type edges: List[List[int]]
+        :rtype: List[int]
+        """
+        dsu = DSU()
+        for edge in edges:
+            x, y = edge
+            if dsu.find(x) == dsu.find(y):
+                return edge
+            dsu.union(x,y)
+        
+        return edges[-1]
