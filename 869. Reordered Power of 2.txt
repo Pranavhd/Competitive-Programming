@@ -1,0 +1,12 @@
+class Solution(object):
+    def reorderedPowerOf2(self, N):
+        """
+        :type N: int
+        :rtype: bool
+        """
+        
+        check = collections.Counter(str(N))
+        for i in range(31):
+            if check == collections.Counter(str(1<<i)):
+                return True
+        return False
