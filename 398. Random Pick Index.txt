@@ -1,0 +1,23 @@
+class Solution(object):
+
+    def __init__(self, nums):
+        """
+        :type nums: List[int]
+        """
+        self.dict_ = collections.defaultdict(list)
+        self.size_ = collections.defaultdict(int)
+        for pos, val in enumerate(nums):
+            self.dict_[val].append(pos)
+            self.size_[val] += 1
+
+    def pick(self, target):
+        """
+        :type target: int
+        :rtype: int
+        """
+        return self.dict_[target][random.randint(0, self.size_[target]-1)]
+
+
+# Your Solution object will be instantiated and called as such:
+# obj = Solution(nums)
+# param_1 = obj.pick(target)
