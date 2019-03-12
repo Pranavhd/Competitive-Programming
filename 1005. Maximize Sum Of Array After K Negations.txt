@@ -1,0 +1,14 @@
+class Solution(object):
+    def largestSumAfterKNegations(self, A, K):
+        """
+        :type A: List[int]
+        :type K: int
+        :rtype: int
+        """
+        A = sorted(A)
+        
+        i = 0
+        while A[i]<0 and i<K and i<len(A):
+            A[i] *= -1
+            i += 1
+        return (sum(A) - 2* ((K-i)%2) * min(A))
