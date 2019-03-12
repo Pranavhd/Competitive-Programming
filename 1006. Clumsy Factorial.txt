@@ -1,0 +1,28 @@
+class Solution(object):
+    def clumsy(self, N):
+        """
+        :type N: int
+        :rtype: int
+        """
+        if N<=2:
+            return N
+        
+        ans = int((N*(N-1))/(N-2))
+        init_N = N
+        
+        N -= 4
+        while N-1>=0:
+            if N-1 == 0:
+                ans -= int(N)
+            elif N-2 == 0:
+                ans -= int(N*(N-1))
+            else:
+                ans -= int((N*(N-1))/(N-2))
+            N -=4
+            
+        N = init_N - 3
+        while N>0:
+            ans += N
+            N -= 4
+            
+        return ans
