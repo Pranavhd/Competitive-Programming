@@ -1,0 +1,23 @@
+class Solution:
+    def findMinDifference(self, timePoints: List[str]) -> int:
+        hash_ = collections.defaultdict(int)
+        mini = float('inf')
+        maxi = -float('inf')
+        ans = float('inf')
+        for time in timePoints:
+            split_ = time.split(":")
+            val = 60*int(split_[0]) + int(split_[1])
+            hash_[val] += 1
+            if hash_[val] >1:
+                return 0
+            maxi = max(maxi, val)
+            mini = min(mini, val)
+        
+        prev = mini
+        for t in range(mini+1 - int(hash_[mini]>1),maxi+1):
+            if t in hash_:
+                ans = min(t - prev, ans)
+                prev = t
+                
+        ans = min(ans, 1440 - maxi + mini)
+        return ans
