@@ -1,0 +1,43 @@
+class Solution(object):
+    def shipWithinDays(self, weights, D):
+        """
+        :type weights: List[int]
+        :type D: int
+        :rtype: int
+        """
+        
+        left = max(weights)
+        right = sum(weights)
+        
+        while left < right:
+            mid, days, capa = (left + right)/2 , 1 ,0
+            for w in weights:
+                if capa + w > mid:
+                    capa = 0
+                    days += 1
+                capa += w
+            if days > D:
+                left = mid + 1
+            else:
+                right = mid
+        return left
+        
+        
+        capa = max(weights)
+        len_ = len(weights)
+
+        while capa:
+            i = 0
+            days = 1
+            curr_capa = capa
+            while i<len_:
+                if curr_capa - weights[i]<0:
+                    curr_capa = capa
+                    days += 1
+                else:
+                    curr_capa -= weights[i]
+                    i += 1
+
+            if curr_capa >= 0 and days<=D:
+                return capa
+            capa += 1
