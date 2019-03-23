@@ -1,0 +1,6 @@
+class Solution:
+    def bitwiseComplement(self, N: int) -> int:
+        if N == 0:
+            return 1
+        len_ = len(bin(N))-2
+        return ((1<<len_)-1)^(N)
