@@ -1,0 +1,22 @@
+class StockSpanner(object):
+
+    def __init__(self):
+        self.list_ = []
+
+    def next(self, price):
+        """
+        :type price: int
+        :rtype: int
+        """
+        
+        value = 1
+        while self.list_ and self.list_[-1][0] <= price:
+            value += self.list_.pop()[1]
+        self.list_.append((price, value))
+        return value
+
+
+
+# Your StockSpanner object will be instantiated and called as such:
+# obj = StockSpanner()
+# param_1 = obj.next(price)
