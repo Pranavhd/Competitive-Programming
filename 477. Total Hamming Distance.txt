@@ -1,0 +1,35 @@
+class Solution(object):
+    def totalHammingDistance(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        i = 1
+        ans = 0
+        len_ = len(nums)
+
+        while i<(1<<32):
+            ones = 0
+            for num in nums:
+                #print(i, i&num)
+                ones += i&num
+            ones /= i
+            ans += (ones)*(len_ - ones)
+            i <<= 1
+        return int(ans)
+
+class Solution(object):
+    def totalHammingDistance(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        ans = 0
+        len_ = len(nums)
+
+        for i in range(32):
+            ones = 0
+            for num in nums:
+                ones += (num>>i)&1
+            ans += ones*(len_-ones)
+        return ans
