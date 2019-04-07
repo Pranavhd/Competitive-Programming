@@ -1,0 +1,18 @@
+import re
+
+class Solution(object):
+    def camelMatch(self, queries, pattern):
+        """
+        :type queries: List[str]
+        :type pattern: str
+        :rtype: List[bool]
+        """
+        
+        ans = []
+        new_pattern = '^[a-z]*' + "[a-z]*".join(list(pattern)) + '[a-z]*$'
+        for query in queries:
+            if re.match(new_pattern, query):
+                ans.append(True)
+            else:
+                ans.append(False)
+        return ans
