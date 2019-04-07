@@ -1,0 +1,25 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def sumRootToLeaf(self, root):
+        """
+        :type root: TreeNode
+        :rtype: int
+        """
+        list_ = []
+        
+        def dfs(node, stri):
+            if node:
+                if node.left == None and node.right == None:
+                    list_.append(stri + str(node.val))
+                dfs(node.left, stri + str(node.val))
+                dfs(node.right, stri + str(node.val))
+        
+        dfs(root, "")
+        list_ = [int(i,2) for i in list_]
+        return sum(list_)
