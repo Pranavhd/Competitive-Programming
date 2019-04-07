@@ -1,0 +1,32 @@
+class Solution(object):
+    def videoStitching(self, clips, T):
+        """
+        :type clips: List[List[int]]
+        :type T: int
+        :rtype: int
+        """
+        
+        cancover = 0
+        for clip in clips:
+            if clip[1]>=T:
+                cancover = 1
+                break
+        
+        if cancover == 0:
+            return -1
+        
+        ans, start = 0 , 0
+        
+        while(start<T):
+            end, index = -1, -1
+            for ind, clip in enumerate(clips):
+                if start>=clip[0] and clip[1]>=end:
+                    end = clip[1]
+                    index = ind
+            
+            if index == -1:
+                return -1
+            start = clips[index][1]
+            ans += 1
+        
+        return ans
