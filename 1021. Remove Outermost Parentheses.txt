@@ -1,0 +1,20 @@
+class Solution(object):
+    def removeOuterParentheses(self, S):
+        """
+        :type S: str
+        :rtype: str
+        """
+        
+        list_ = []
+        count = 0
+        start = 0
+        
+        for ind,s in enumerate(S):
+            if s=='(':
+                count += 1
+            else:
+                count -= 1
+                if count == 0:
+                    list_.append(S[start+1:ind])
+                    start = ind + 1
+        return "".join(list_)
