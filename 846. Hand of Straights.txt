@@ -1,0 +1,15 @@
+class Solution:
+    def isNStraightHand(self, hand: List[int], W: int) -> bool:
+        d = {}
+        for h in hand:
+            d[h] = d.get(h,0) + 1
+
+        while d:
+            mini = min(d)
+            for k in range(mini, mini + W):
+                if k not in d:
+                    return False
+                d[k] -= 1
+                if d[k] == 0:
+                    del d[k]
+        return True
