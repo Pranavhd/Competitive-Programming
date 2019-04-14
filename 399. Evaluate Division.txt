@@ -10,7 +10,27 @@ class Solution(object):
         for ind, eq in enumerate(equations):
             graph[eq[0]].append((eq[1],values[ind]))
             graph[eq[1]].append((eq[0],1.0/values[ind]))
-            
+           
+        def bfs(query):
+            ele1, ele2 = query
+            if ele1 not in graph or ele2 not in graph:
+                return -1.0
+            visited = set()
+            q = [(ele1, 1.0)]
+            while q:
+                curr_ele, curr_val = q.pop()
+                if curr_ele == ele2:
+                    return curr_val
+                visited.add(curr_ele)
+                for child in graph[curr_ele]:
+                    ele, val = child
+                    if ele not in visited:
+                        q.append((ele, val*curr_val))
+            return -1.0
+        
+        return [bfs(query) for query in queries]
+        
+        '''
         def dfs(val1, val2, dist, visited):
             if val1 == val2:
                 ans.append(1.0*dist)
@@ -35,3 +55,4 @@ class Solution(object):
             
         #print(ans)
         return ans
+        '''

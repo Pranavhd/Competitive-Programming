@@ -1,0 +1,35 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution(object):
+    def addOneRow(self, root, v, d):
+        """
+        :type root: TreeNode
+        :type v: int
+        :type d: int
+        :rtype: TreeNode
+        """
+        
+        if d == 1:
+            newnode = TreeNode(v)
+            newnode.left = root
+            return newnode
+        
+        def solve(node, v, h, d):
+            if node == None:
+                return 
+            if h == d - 1:
+                duml, dumr = node.left, node.right
+                node.left, node.right = TreeNode(v), TreeNode(v)
+                node.left.left, node.right.right = duml, dumr
+                return
+            else:
+                solve(node.left, v, h + 1, d)
+                solve(node.right, v, h + 1, d)
+                
+        solve(root, v, 1, d)
+        return root
