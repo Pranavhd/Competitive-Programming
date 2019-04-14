@@ -1,0 +1,20 @@
+class Solution(object):
+    def queryString(self, S, N):
+        """
+        :type S: str
+        :type N: int
+        :rtype: bool
+        """
+        
+        set_ = set()
+        for ind, val in enumerate(S):
+            for j in range(max(ind-30,0),ind+1):
+                v = 0
+                for k in range(j,ind+1):
+                    v = 2*v + int(S[k])
+                if 0<v<=N:
+                    set_.add(v)
+        print(set_)
+        if len(set_) == N:
+            return True
+        return False
