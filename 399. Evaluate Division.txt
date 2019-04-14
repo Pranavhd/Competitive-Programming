@@ -1,0 +1,37 @@
+class Solution(object):
+    def calcEquation(self, equations, values, queries):
+        """
+        :type equations: List[List[str]]
+        :type values: List[float]
+        :type queries: List[List[str]]
+        :rtype: List[float]
+        """
+        graph = collections.defaultdict(list)
+        for ind, eq in enumerate(equations):
+            graph[eq[0]].append((eq[1],values[ind]))
+            graph[eq[1]].append((eq[0],1.0/values[ind]))
+            
+        def dfs(val1, val2, dist, visited):
+            if val1 == val2:
+                ans.append(1.0*dist)
+                return True
+            visited.add(val1)
+            for child in graph[val1]:
+                if child[0] not in visited: 
+                    if dfs(child[0], val2, child[1]*dist, visited):
+                        return True
+            return False
+        
+        ans = []
+        for query in queries:
+            val1, val2 = query[0], query[1]
+            visited = set()
+            if val1 and val2 in graph:
+                val = dfs(val1, val2, 1.0, visited)
+                if not val:
+                    ans.append(-1.0)
+            else:
+                ans.append(-1.0)
+            
+        #print(ans)
+        return ans
