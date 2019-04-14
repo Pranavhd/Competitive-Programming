@@ -1,0 +1,30 @@
+'''
+ans.append(temp)
+if number:
+    for each num[start:]:
+        temp.append(num)
+        back_(i+1, number - 1)
+        temp.pop()
+
+'''
+
+class Solution(object):
+    def back_(self, ans, temp, nums, start, number, sze): 
+        if len(temp) == sze:
+            ans.append(list(temp))
+        if number:
+            for i in range(start,len(nums)):
+                temp.append(nums[i])
+                self.back_(ans, temp, nums, i+1, number -1, sze)
+                temp.pop()
+    
+    def combine(self, n, k):
+        """
+        :type n: int
+        :type k: int
+        :rtype: List[List[int]]
+        """
+        nums = list(range(1,n+1))
+        ans = []
+        self.back_(ans, [], nums, 0, k, k)
+        return ans
