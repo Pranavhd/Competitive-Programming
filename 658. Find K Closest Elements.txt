@@ -1,0 +1,21 @@
+import heapq
+
+class Solution(object):
+    def findClosestElements(self, arr, k, x):
+        """
+        :type arr: List[int]
+        :type k: int
+        :type x: int
+        :rtype: List[int]
+        """
+        l = 0
+        h = len(arr)-k
+        
+        while l<h:
+            mid = (l + h)//2
+            if x - arr[mid] > arr[mid+k] - x:
+                l = mid + 1
+            else:
+                h = mid
+                
+        return arr[l:l+k]
