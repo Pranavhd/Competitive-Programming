@@ -1,0 +1,31 @@
+class Solution(object):
+    def sortedSquares(self, A):
+        """
+        :type A: List[int]
+        :rtype: List[int]
+        """
+        
+        i = 0
+        while i<len(A) and A[i]<0:
+            i += 1
+        
+        j = i - 1
+        out = []
+        while i<len(A) and j>=0:
+            Ai = A[i]*A[i]
+            Aj = A[j]*A[j]
+            if Ai < Aj:
+                out.append(Ai)
+                i += 1
+            else:
+                out.append(Aj)
+                j -= 1
+                
+        while j>=0:
+            out.append(A[j]*A[j])
+            j -= 1
+        while i<len(A):
+            out.append(A[i]*A[i])
+            i += 1
+            
+        return out

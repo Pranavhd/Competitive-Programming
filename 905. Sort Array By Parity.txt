@@ -1,0 +1,17 @@
+class Solution(object):
+    def sortArrayByParity(self, A):
+        """
+        :type A: List[int]
+        :rtype: List[int]
+        """
+        
+        l = 0
+        
+        for ind, ele in enumerate(A):
+            if ele%2 == 0:
+                temp = A[l]
+                A[l] = A[ind]
+                A[ind] = temp
+                l += 1
+                
+        return A
