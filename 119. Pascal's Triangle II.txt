@@ -1,0 +1,17 @@
+class Solution(object):
+    def getRow(self, rowIndex):
+        """
+        :type rowIndex: int
+        :rtype: List[int]
+        """
+        if rowIndex == 0:
+            return [1]
+        
+        prev_row = [1]
+        for i in range(1, rowIndex + 1):
+            r1 = [0] + prev_row
+            r2 = prev_row + [0]
+            row = [i+j for i,j in zip(r1,r2)]
+            prev_row = row
+            
+        return prev_row
