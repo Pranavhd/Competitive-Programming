@@ -1,0 +1,35 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def closestValue(self, root: TreeNode, target: float) -> int:
+        ans = float('inf')
+        
+        while root:
+            if abs(root.val - target) < abs(ans - target):
+                ans = root.val
+            if target < root.val:
+                root = root.left
+            else:
+                root = root.right
+        return int(ans)
+        
+'''
+brute:
+for each node
+compute min(target - node.val, target - self.ans)
+if node.val is closer update self.ans = node.val
+traverse tree in any way
+
+better:
+given bst, thus check node val against target
+if target < check in left tree
+else check in right tree
+
+iterative:
+while root, keep checking
+'''
