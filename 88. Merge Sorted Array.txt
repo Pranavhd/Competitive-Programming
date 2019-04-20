@@ -1,0 +1,70 @@
+class Solution(object):
+    def merge(self, nums1, m, nums2, n):
+        """
+        :type nums1: List[int]
+        :type m: int
+        :type nums2: List[int]
+        :type n: int
+        :rtype: None Do not return anything, modify nums1 in-place instead.
+        """
+        
+        pos_add = m + n -1
+        l1, l2 = m-1, n-1
+        while l1 >=0 and l2 >=0:
+            if nums1[l1] < nums2[l2]:
+                nums1[pos_add] = nums2[l2]
+                l2 -= 1
+            else:
+                nums1[pos_add] = nums1[l1]
+                l1 -= 1
+            pos_add -= 1
+            
+        while l2 >=0:
+            nums1[pos_add] = nums2[l2]
+            l2 -= 1
+            pos_add -= 1
+        
+'''
+instead of starting from from, start from back
+l1 = m-1, l2 = n-1
+choose max, num1[l1+l2+1] = max
+1 2 3 0 0 0
+2 5 6
+          p
+1 2 3 0 0 6
+2 5     p
+1 2 3 0 5 6
+2   p p
+1 2 3 3 5 6
+
+
+while l1< m and l2 < m+n:
+while l1< m and num1[l1] <= num1[l2]:
+l1 += 1
+if l1 <m:
+swap (l1, l2)
+l1 += 1
+
+while l1<m and l2<m+n:
+            if nums1[l1] <= nums1[l2]:
+                l1 += 1
+            else:
+                swap(l1, l2)
+                l2 += 1
+
+
+l1, l2 = 0, 0
+while i < m+n:
+get smaller
+nums1[]
+use the logic nums1[index++] = numx[i]
+
+append first
+l1, l2 = 0, m
+while l1 < m and l2 < m+n:
+if num1[l1] <= num1[l2]:
+   l1 += 1
+else:
+   swap()
+   l2 += 1
+'''
