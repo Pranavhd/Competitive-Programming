@@ -1,0 +1,63 @@
+class Solution(object):
+    def candyCrush(self, board):
+        """
+        :type board: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        
+        next_state = board
+        rows, cols = len(board), len(board[0])
+        prev_state = [[0 for i in range(cols)] for j in range(rows)]
+        
+        while prev_state != next_state:
+            for r in range(rows):
+                for c in range(cols):
+                    prev_state[r][c] = next_state[r][c]
+            
+            for r in range(0, rows-2):
+                for c in range(cols):
+                    if abs(next_state[r][c]) == abs(next_state[r+1][c]) == abs(next_state[r+2][c]):
+                        next_state[r][c] = next_state[r+1][c] = next_state[r+2][c] = - abs(next_state[r][c])
+                        
+            for r in range(rows):
+                for c in range(0, cols - 2):
+                    if abs(next_state[r][c]) == abs(next_state[r][c+1]) == abs(next_state[r][c+2]):
+                        next_state[r][c] = next_state[r][c+1] = next_state[r][c+2] = - abs(next_state[r][c])
+            
+            for c in range(cols):
+                last_ = rows - 1
+                for r in range(rows-1, -1, -1):
+                    if next_state[r][c] > 0:
+                        next_state[last_][c] = next_state[r][c]
+                        last_ -= 1
+                
+                for x in range(last_,-1,-1):
+                    next_state[x][c] = 0
+        
+        return next_state
+            
+                
+                
+        
+'''
+stable = next_state = prev_state
+
+next_state, prev_state = [[]], board
+while next_State!=prev_state:
+
+next_State = prev_state
+for every position
+dfs(i,j, squares, board[i][j], set_columns)
+
+for each_col in set_col:
+ for row in range(rows):
+   temp = values from top
+   if temp == -1:
+     break
+   temp.append()
+ end_row = len(rows) - 1
+ for j in range(len(temp)-1, -1, -1):
+  next_State[end_row][eacl_col] = temp[j]
+  end_row -= 1
+   
+'''
