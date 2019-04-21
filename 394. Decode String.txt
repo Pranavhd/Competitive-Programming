@@ -1,0 +1,28 @@
+class Solution(object):
+    def decodeString(self, s):
+        """
+        :type s: str
+        :rtype: str
+        """
+        
+        stack = []
+        for ele in s:
+            if ele == ']':
+                current = ''
+                while stack:
+                    val = stack.pop()
+                    if val == '[':
+                        break
+                    current = current + val
+                num = ''
+                while stack and stack[-1].isdigit():
+                    num = stack.pop() + num
+                stack.append(int(num)*current)
+            else:
+                stack.append(ele)
+        return ''.join(stack)
+        
+'''
+traverse each element
+
+'''
