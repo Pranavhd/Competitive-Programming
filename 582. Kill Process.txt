@@ -1,0 +1,42 @@
+class Solution:
+    def killProcess(self, pid: List[int], ppid: List[int], kill: int) -> List[int]:
+        
+        deque = collections.deque([kill])
+        ans = []
+        d = collections.defaultdict(list)
+        
+        for ind, val in enumerate(ppid):
+            d[val].append(pid[ind])
+        
+        #print(d)
+        
+        while deque:
+            ele = deque.popleft()
+            #print(ele)
+            deque.extend(d[ele])
+            ans.append(ele)
+        
+        return ans
+        
+'''
+if process is killed, all childs processes killed
+recursive
+while queue
+multiple passes -> single pass using dictionary
+
+d[parent_process] = [child processes]
+
+d
+------
+3 : 1, 5
+0 : 3
+5 : 10
+
+append killed process to a deque
+extend deque by adding d[killed_process]
+
+while deque:
+popleft
+extend deque by adding d[popped_ele]
+ans extend by adding d[popped_ele]
+'''

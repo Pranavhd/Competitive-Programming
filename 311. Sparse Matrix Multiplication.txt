@@ -1,0 +1,23 @@
+class Solution:
+    def multiply(self, A: List[List[int]], B: List[List[int]]) -> List[List[int]]:
+        row_a, col_a = len(A), len(A[0])
+        row_b, col_b = len(B), len(B[0])
+        
+        C = [[0 for i in range(col_b)] for i in range(row_a)]
+        # col_a = row_b
+        
+        for ia in range(row_a):
+            for ja in range(col_a):
+                if A[ia][ja]:
+                    for kb in range(col_b):
+                        if B[ja][kb]:
+                            C[ia][kb] += A[ia][ja]*B[ja][kb]
+        return C
+        
+'''
+0,0, 0,1, 0,2       0,0 1,0 2,0
+                    1,0 1,1 2,1
+                    2,0 1,1 
+
+
+'''
