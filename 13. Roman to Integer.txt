@@ -1,0 +1,12 @@
+class Solution:
+    def romanToInt(self, s: str) -> int:
+        map_ = {'I':1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000}
+        
+        ans = 0
+        for i in range(len(s)-1):
+            if map_[s[i]] >= map_[s[i+1]]:
+                ans += map_[s[i]]
+            else:
+                ans -= map_[s[i]]
+        ans += map_[s[-1]]
+        return ans
