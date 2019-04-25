@@ -1,0 +1,23 @@
+class Solution(object):
+    def floodFill(self, image, sr, sc, newColor):
+        """
+        :type image: List[List[int]]
+        :type sr: int
+        :type sc: int
+        :type newColor: int
+        :rtype: List[List[int]]
+        """
+        
+        actual = image[sr][sc]
+        image[sr][sc] = newColor
+        
+        if actual == newColor:
+            return image
+        
+        direcs = [[0,1],[1,0],[-1,0],[0,-1]]
+        for dire in direcs:
+            newx = dire[0] + sr
+            newy = dire[1] + sc
+            if 0<=newx<len(image) and 0<=newy<len(image[0]) and image[newx][newy] == actual:
+                self.floodFill(image, newx, newy, newColor)
+        return image
