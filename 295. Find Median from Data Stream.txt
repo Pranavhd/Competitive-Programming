@@ -1,0 +1,42 @@
+import heapq
+
+class MedianFinder(object):
+
+    def __init__(self):
+        """
+        initialize your data structure here.
+        """
+        self.hmax, self.hmin = [], []
+        heapq.heapify(self.hmax)
+        heapq.heapify(self.hmin)
+        self.size = 0
+
+    def addNum(self, num):
+        """
+        :type num: int
+        :rtype: None
+        """
+        self.size += 1
+        if self.size & 1:
+            heapq.heappush(self.hmax, (-num, num))
+        else:
+            heapq.heappush(self.hmin, (num, num))
+        ele = heapq.heappop(self.hmax)
+        heapq.heappush(self.hmin, (ele[1], ele[1]))
+        ele = heapq.heappop(self.hmin)
+        heapq.heappush(self.hmax, (-ele[1], ele[1]))
+
+    def findMedian(self):
+        """
+        :rtype: float
+        """
+        #print(self.size, self.hmax, self.hmin)
+        if self.size & 1:
+            return self.hmax[0][1]
+        return (self.hmax[0][1] + self.hmin[0][1])/2.0
+
+
+# Your MedianFinder object will be instantiated and called as such:
+# obj = MedianFinder()
+# obj.addNum(num)
+# param_2 = obj.findMedian()
