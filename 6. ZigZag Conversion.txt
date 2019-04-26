@@ -1,0 +1,28 @@
+class Solution(object):
+    def convert(self, s, numRows):
+        """
+        :type s: str
+        :type numRows: int
+        :rtype: str
+        """
+        if numRows == 1:
+            return s
+        
+        rows = []
+        num = min(numRows,len(s))
+        for i in range(num):
+            rows.append([])
+            
+        print(rows)
+        goingdown = False
+        curr_row = 0
+        for c in s:
+            rows[curr_row].append(c)
+            if curr_row == 0 or curr_row == numRows -1:
+                goingdown = not goingdown
+            curr_row += int(goingdown) - int(not goingdown)
+        
+        ans = ""
+        for row in rows:
+            ans = ans + "".join(row)
+        return ans
