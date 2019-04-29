@@ -1,0 +1,46 @@
+"""
+# Definition for a Node.
+class Node(object):
+    def __init__(self, val, neighbors):
+        self.val = val
+        self.neighbors = neighbors
+"""
+
+'''
+recursive approach:
+given a node, create deep copy, return a copy of node
+
+create a new node, copy the value
+for all its neigbours that are not visited, call the cloneGraph, that will return that node
+append that node in current node's list
+
+return node
+
+problem => visited nodes:
+create a global dicitonary
+
+'''
+
+class Solution(object):
+    def __init__(self):
+        self.dict = {}
+    
+    def cloneGraph(self, node, itr = 0):
+        """
+        :type node: Node
+        :rtype: Node
+        """
+        
+        #print(itr,node.val,len(node.neighbors))
+        
+        new_node = Node(node.val, [])
+        self.dict[node] = new_node
+        for neighbour in node.neighbors:
+            if neighbour not in self.dict:
+                new_neigh = self.cloneGraph(neighbour, itr + 1)
+            else:
+                new_neigh = self.dict[neighbour]
+            new_node.neighbors.append(new_neigh)
+                
+        #print(itr,new_node.val,len(new_node.neighbors))
+        return new_node

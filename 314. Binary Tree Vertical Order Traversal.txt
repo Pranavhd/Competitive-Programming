@@ -1,0 +1,49 @@
+# Definition for a binary tree node.
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+'''
+dict
+create global ans
+traverse tree left = -1, right = 1
+if value in ans:
+else:
+
+'''
+class Solution(object):
+    
+    def verticalOrder(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[List[int]]
+        """
+        
+        if not root:
+            return []
+        
+        dicti = {}
+        mini, maxi = float('inf'), -float('inf')
+        
+        queue = collections.deque()
+        queue.append((root,0))
+        while queue:
+            node, val = queue.popleft()
+            #print(node.val, val)
+            dicti[val] = dicti.get(val, [])
+            dicti[val].append(node.val)
+            mini, maxi = min(mini, val), max(maxi, val)
+            
+            if node.left:
+                queue.append((node.left, val - 1))
+            if node.right:
+                queue.append((node.right, val + 1))
+        
+        ans = []
+        #print(dicti)
+        #print(mini, maxi)
+        for i in range(mini, maxi+1):
+            ans.append(dicti[i])
+        return ans

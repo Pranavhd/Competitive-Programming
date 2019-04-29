@@ -1,0 +1,33 @@
+class FreqStack(object):
+
+    def __init__(self):
+        self.groups = {}
+        self.d = {}
+        self.maxfre = 0
+        
+    def push(self, x):
+        """
+        :type x: int
+        :rtype: None
+        """
+        self.d[x] = self.d.get(x, 0) + 1
+        count = self.d[x]
+        if count > self.maxfre:
+            self.maxfre = count
+        self.groups[count] = self.groups.get(count, [])
+        self.groups[count].append(x)
+
+    def pop(self):
+        """
+        :rtype: int
+        """
+        ele = self.groups[self.maxfre].pop()
+        if not self.groups[self.maxfre]:
+            self.maxfre -= 1
+        self.d[ele] -= 1
+        return ele
+
+# Your FreqStack object will be instantiated and called as such:
+# obj = FreqStack()
+# obj.push(x)
+# param_2 = obj.pop()
