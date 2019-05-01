@@ -1,0 +1,30 @@
+class Solution(object):
+    def maxProfit(self, prices):
+        """
+        :type prices: List[int]
+        :rtype: int
+        """
+        
+        if not prices:
+            return 0
+        
+        min_, max_, n = prices[0], prices[-1], len(prices)
+        pf, pb = [0 for i in range(n)], [0 for i in range(n)]
+        
+        pf[0] = 0
+        for i in range(1,n):
+            pf[i] = max(pf[i-1], prices[i] - min_)
+            min_ = min(min_, prices[i])
+            
+        pb[n-1] = 0
+        for i in range(n-2, -1, -1):
+            pb[i] = max(pb[i+1], max_ - prices[i])
+            max_ = max(max_, prices[i])
+            
+        ans = 0
+        for i in range(n):
+            ans = max(ans, pf[i] + pb[i])
+        
+        #print(pf)
+        #print(pb)
+        return ans

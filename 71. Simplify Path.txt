@@ -1,0 +1,16 @@
+class Solution(object):
+    def simplifyPath(self, path):
+        """
+        :type path: str
+        :rtype: str
+        """
+        path_list = path.split('/')
+        deque = collections.deque()
+        
+        for ele in path_list:
+            if len(ele) and ele!='.' and ele!='..':
+                deque.append(ele)
+            if ele =='..' and deque:
+                deque.pop()
+                
+        return '/'+'/'.join(deque)
