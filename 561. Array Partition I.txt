@@ -1,0 +1,19 @@
+class Solution(object):
+    def arrayPairSum(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        d = [0 for i in range(20005)]
+        for n in nums:
+            d[n + 10000] += 1
+        
+        ans, prev = 0, 0
+        for i in range(20002):
+            if d[i]!=0:
+                #print(i, prev, ans)
+                d[i] -= prev
+                prev = d[i]%2
+                ans += (d[i]/2 + prev)*(i-10000)
+                    
+        return ans
