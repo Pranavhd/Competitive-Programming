@@ -1,0 +1,29 @@
+import heapq
+
+class Solution(object):
+    def findCheapestPrice(self, n, flights, src, dst, K):
+        """
+        :type n: int
+        :type flights: List[List[int]]
+        :type src: int
+        :type dst: int
+        :type K: int
+        :rtype: int
+        """
+        
+        graph = collections.defaultdict(list)
+        
+        for u,v,w in flights:
+            graph[u].append((v,w))
+        
+        k = 0
+        heap = [(0, src, k)]
+        
+        while heap:
+            dist, node, curr_k = heapq.heappop(heap)
+            if curr_k > K + 1: continue
+            if node == dst:  return dist
+            for nei, weight in graph[node]:
+                heapq.heappush(heap, (dist+weight, nei, curr_k + 1))
+                
+        return -1

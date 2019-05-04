@@ -1,0 +1,23 @@
+class Solution(object):
+    def canPermutePalindrome(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        d = {}
+        for ele in s:
+            d[ele] = d.get(ele, 0) + 1
+            
+        odd, even = 0, 0
+        
+        for key in d:
+            if d[key]%2:
+                odd += 1
+            else:
+                even += 1
+        
+        if len(s)%2 and odd == 1:
+            return True
+        if len(s)%2 == 0 and odd == 0:
+            return True
+        return False

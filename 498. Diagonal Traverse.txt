@@ -1,0 +1,22 @@
+class Solution(object):
+    def findDiagonalOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+        if not matrix:
+            return None
+        
+        d = collections.defaultdict(list)
+        
+        for i in range(len(matrix)):
+            for j in range(len(matrix[0])):
+                d[i+j].append(matrix[i][j])
+                
+        ans = []
+        for key in d:
+            if key%2==0:
+                ans.extend(d[key][::-1])
+            else:
+                ans.extend(d[key])
+        return ans

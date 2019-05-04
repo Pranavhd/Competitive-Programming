@@ -1,0 +1,12 @@
+class Solution:
+    # @param n, an integer
+    # @return an integer
+    def reverseBits(self, n):
+        ans, i = 0, 0
+        #print(ans)
+        while n:
+            r_most = n%2
+            n = n>>1
+            ans = ans | (r_most<<(31-i))
+            i += 1
+        return ans

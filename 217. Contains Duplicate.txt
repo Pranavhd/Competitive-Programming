@@ -1,0 +1,10 @@
+class Solution(object):
+    def containsDuplicate(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: bool
+        """
+        c = collections.Counter(nums)
+        if any([x>1 for x in c.values()]):
+            return True
+        return False

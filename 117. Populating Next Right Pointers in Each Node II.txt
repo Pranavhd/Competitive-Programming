@@ -1,0 +1,30 @@
+"""
+# Definition for a Node.
+class Node(object):
+    def __init__(self, val, left, right, next):
+        self.val = val
+        self.left = left
+        self.right = right
+        self.next = next
+"""
+class Solution(object):
+    
+    def connect(self, root):
+        """
+        :type root: Node
+        :rtype: Node
+        """
+        root2 = root
+        while root2:
+            temp = Node(0)
+            curr = temp
+            while root2:
+                if root2.left:
+                    curr.next = root2.left
+                    curr = curr.next
+                if root2.right:
+                    curr.next = root2.right
+                    curr = curr.next
+                root2 = root2.next
+            root2 = temp.next
+        return root

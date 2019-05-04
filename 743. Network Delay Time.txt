@@ -1,0 +1,28 @@
+class Solution(object):
+    def networkDelayTime(self, times, N, src):
+        """
+        :type times: List[List[int]]
+        :type N: int
+        :type K: int
+        :rtype: int
+        """
+        
+        graph = collections.defaultdict(list)
+        for u,v,w in times:
+            graph[u].append((v,w))
+            
+        heap = [(0, src)]
+        d = {}
+        
+        while heap:
+            dist, node = heapq.heappop(heap)
+            if node in d:
+                continue
+            d[node] = dist
+            for nei, weight in graph[node]:
+                if nei not in d:
+                    heapq.heappush(heap, (dist + weight,nei))
+                    
+        if len(d) == N:
+            return max(d.values())
+        return -1

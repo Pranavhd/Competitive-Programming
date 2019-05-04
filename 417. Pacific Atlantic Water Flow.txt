@@ -1,0 +1,61 @@
+class Solution(object):
+    def pacificAtlantic(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[List[int]]
+        """
+        if not matrix:
+            return []
+        
+        rows, cols = len(matrix), len(matrix[0])
+        
+        val = [[0 for i in range(cols)] for j in range(rows)]
+        dp = [[0 for i in range(cols)] for j in range(rows)]
+        direcs = [[1,0],[-1,0],[0,1],[0,-1]]
+        
+        def dfs(x, y):
+            
+            for direc in direcs:
+                next_x = x + direc[0]
+                next_y = y + direc[1]
+                if 0<=next_x<rows and 0<=next_y<cols and matrix[next_x][next_y] >= matrix[x][y] and dp[next_x][next_y] == 0:
+                    dp[next_x][next_y] = 1
+                    val[next_x][next_y] += 1
+                    dfs(next_x, next_y)
+        
+        for i in range(rows):
+            if dp[i][0] == 0:
+                dp[i][0] = 1
+                val[i][0] += 1
+                dfs(i,0)
+        for i in range(cols):
+            if dp[0][i] == 0:
+                dp[0][i] = 1
+                val[0][i] += 1
+                dfs(0,i)
+           
+        dp = [[0 for i in range(cols)] for j in range(rows)]
+        
+        #print(dp)
+        #print(val)
+        
+        ans = []
+        for i in range(rows):
+            if dp[i][cols-1] == 0:
+                dp[i][cols-1] = 1
+                val[i][cols-1] += 1
+                dfs(i,cols-1)
+            
+        for i in range(cols):
+            if dp[rows-1][i] == 0:
+                dp[rows-1][i] = 1
+                val[rows-1][i] += 1
+                dfs(rows-1,i)
+            
+        #print(dp)
+        for i in range(rows):
+            for j in range(cols):
+                if val[i][j] == 2:
+                    ans.append([i,j])
+                    
+        return ans
