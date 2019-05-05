@@ -1,0 +1,71 @@
+import collections
+
+class TrieNode(object):
+    def __init__(self):
+        self.child = collections.defaultdict(TrieNode)
+        self.is_word = False
+        
+class Trie(object):
+    def __init__(self):
+        self.root = TrieNode()
+        
+    def insert(self, word):
+        current = self.root
+        for letter in word:
+            current = current.child[letter]
+        current.is_word = True
+        
+    def search(self, word):
+        current = self.root
+        for letter in word:
+            current = current.child.get(letter, None)
+            if current == None:
+                return False
+        return current.is_word
+    
+    def startswith(self, word):
+        current = self.root
+        for letter in word:
+            current = current.child.get(letter, None)
+            if current == None:
+                return False
+        return True
+
+class Solution:
+    def dfs(self, res, board, visited, word, x, y, trie):
+        if visited[x][y]:
+            return
+        
+        if not trie.startswith(word):
+            return
+        if trie.search(word):
+            res.append(word)
+            
+        visited[x][y] = True
+        direcs = [[1,0],[-1,0],[0,-1],[0,1]]
+        for direc in direcs:
+            newx = x + direc[0]
+            newy = y + direc[1]
+            if 0<=newx<len(board) and 0<=newy<len(board[0]):
+                self.dfs(res, board, visited, word + str(board[newx][newy]), newx, newy, trie)
+        visited[x][y] = False
+        
+    def findWords(self, board, words):
+        trie = Trie()
+        for word in words:
+            trie.insert(word)
+            
+        res = []
+        visited = [[False for i in range(len(board[0]))] for j in range(len(board))]
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                self.dfs(res, board, visited, str(board[i][j]), i, j, trie)
+            
+        #print(type(res))
+        d = {}
+        ans = []
+        for ele in res:
+            if ele not in d:
+                d[ele] = 1
+                ans.append(ele)
+        return ans

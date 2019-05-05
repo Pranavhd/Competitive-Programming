@@ -1,0 +1,19 @@
+class Solution:
+    def findAllConcatenatedWordsInADict(self, words: List[str]) -> List[str]:
+        
+        set_ = set()
+        words.sort(key = lambda x : len(x))
+        ans = []
+        
+        for word in words:
+            dp = [0 for i in range(len(word) + 1)]
+            dp[0] = True
+            for i in range(1, len(word) + 1):
+                for j in range(i):
+                    if dp[j] and word[j:i] in set_:
+                        dp[i] = True
+            if dp[len(word)] == True:
+                ans.append(word)
+            set_.add(word)
+        
+        return ans

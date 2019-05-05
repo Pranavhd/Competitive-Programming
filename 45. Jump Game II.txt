@@ -1,0 +1,11 @@
+class Solution:
+    def jump(self, nums: List[int]) -> int:
+        jumps, curend, curfarthest = 0, 0, 0
+        
+        for i in range(len(nums)-1):
+            curfarthest = max(curfarthest, i + nums[i])
+            if i == curend:
+                jumps += 1
+                curend = curfarthest
+                
+        return jumps
