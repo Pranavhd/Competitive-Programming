@@ -1,0 +1,28 @@
+class DSU(object):
+    def __init__(self, N):
+        self.parent = list(range(N))
+        
+    def find(self, x):
+        if self.parent[x]!=x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+    
+    def union(self, x, y):
+        xr = self.parent[x]
+        yr = self.parent[y]
+        self.parent[xr] = yr
+
+class Solution(object):
+    def validTree(self, n, edges):
+        """
+        :type n: int
+        :type edges: List[List[int]]
+        :rtype: bool
+        """
+        
+        dsu = DSU(n)
+        for x, y in edges:
+            if dsu.find(x) == dsu.find(y):
+                return False
+            dsu.union(x,y)
+        return len(edges) == n - 1
