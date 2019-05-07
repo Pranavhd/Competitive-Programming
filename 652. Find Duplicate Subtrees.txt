@@ -1,0 +1,42 @@
+import collections
+
+# Definition for a binary tree node.
+class TreeNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+'''
+store the hash as value -> treenode
+for every pair in hash[key] -> traverse both and check
+traverse(l1, l2):
+if not l1 and not l2:
+return True
+if l1:
+return False
+if l2:
+return False
+l1.val == l2.val and tave(l1.left, l2.left) and trave(l1.rght, l2.right)
+'''
+
+class Solution(object):
+    def findDuplicateSubtrees(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[TreeNode]
+        """
+        
+        count = {}
+        ans = []
+        
+        def pre(node):
+            if node:
+                uid = (node.val, pre(node.left), pre(node.right))
+                count[uid] = count.get(uid, 0) + 1
+                if count[uid] == 2:
+                    ans.append(node)
+                return uid
+            
+        pre(root)
+        return ans

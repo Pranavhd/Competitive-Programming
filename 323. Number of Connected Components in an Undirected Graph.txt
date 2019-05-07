@@ -1,0 +1,38 @@
+class DSU(object):
+    def __init__(self, N):
+        self.parent = list(range(N))
+        
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+    
+    def union(self, x, y):
+        xr = self.find(x)
+        yr = self.find(y)
+        self.parent[xr] = yr
+
+class Solution(object):
+    def countComponents(self, n, edges):
+        """
+        :type n: int
+        :type edges: List[List[int]]
+        :rtype: int
+        """
+        
+        dsu = DSU(n)
+        for x, y in edges:
+            dsu.union(x, y)
+            
+        for i in range(n):
+            dsu.find(i)
+            
+        d = {}
+        unique = 0
+        print(dsu.parent)
+        for ele in dsu.parent:
+            if ele not in d:
+                unique += 1
+                d[ele] = 1
+            
+        return unique
