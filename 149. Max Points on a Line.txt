@@ -1,0 +1,37 @@
+class Solution(object):
+    def maxPoints(self, points):
+        """
+        :type points: List[List[int]]
+        :rtype: int
+        """
+        
+        n = len(points)
+        if n < 3:
+            return n
+        
+        def max_from(i):
+            dict_slope = {0:0}
+            x1, y1 = points[i]
+            duplicates = 0
+
+            for j in range(n):
+                x2, y2 = points[j]
+                if x1 == x2 and y1 == y2:
+                    duplicates += 1
+                else:
+                    
+                    if x1 == x2:
+                        m = 'inf'
+                    else:
+                        m = (y2-y1)/(x2-x1)
+                    print(m)
+                    dict_slope[m] = dict_slope.get(m, 0) + 1
+        
+            #print(points[i], dict_slope)
+            return max(dict_slope.values()) + duplicates
+        #return max(len(dict_slope[i]) for i in dict_slope)
+    
+        max_c = 1
+        for i in range(n):
+            max_c = max(max_c, max_from(i))
+        return max_c

@@ -1,0 +1,11 @@
+class Solution:
+    def numUniqueEmails(self, emails: List[str]) -> int:
+        set_ = set()
+        for email in emails:
+            before, after = email.split('@',1)
+            plus_before = before.split('+')
+            key = "".join(plus_before[0].split('.'))
+            key = key + '@' + after
+            set_.add(key)
+        #print(set_)
+        return len(set_)

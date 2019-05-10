@@ -1,0 +1,72 @@
+class Nodes(object):
+    def __init__(self):
+        self.child = collections.defaultdict(Nodes)
+        self.list_ = ""
+
+class FileSystem(object):
+
+    def __init__(self):
+        self.root = Nodes()
+
+    def ls(self, path):
+        """
+        :type path: str
+        :rtype: List[str]
+        """
+        current = self.root
+        path_split = path.split('/')
+        for paths in path_split:
+            if len(paths):
+                current = current.child[paths]
+        print(current.list_)
+        if current.list_:
+            return path_split[-1]
+        ans = current.child.keys()
+        ans.sort()
+        #print(ans, type(ans))
+        return ans
+    
+    def mkdir(self, path):
+        """
+        :type path: str
+        :rtype: None
+        """
+        current = self.root
+        path_split = path.split('/')
+        for paths in path_split:
+            if len(paths):
+                current = current.child[paths]
+
+    def addContentToFile(self, path, content):
+        """
+        :type filePath: str
+        :type content: str
+        :rtype: None
+        """
+        current = self.root
+        path_split = path.split('/')
+        for paths in path_split:
+            if len(paths):
+                current = current.child[paths]
+        current.list_+= content
+
+    def readContentFromFile(self, path):
+        """
+        :type filePath: str
+        :rtype: str
+        """
+        current = self.root
+        path_split = path.split('/')
+        for paths in path_split:
+            if len(paths):
+                current = current.child[paths]
+        #print(current.list_)
+        return current.list_
+
+
+# Your FileSystem object will be instantiated and called as such:
+# obj = FileSystem()
+# param_1 = obj.ls(path)
+# obj.mkdir(path)
+# obj.addContentToFile(filePath,content)
+# param_4 = obj.readContentFromFile(filePath)

@@ -1,0 +1,45 @@
+class Solution(object):
+    def bfs(self, forest, sr, sc, tr, tc):
+        queue = collections.deque()
+        queue.append([0, sr, sc])
+        seen = {(sr, sc)}
+        direcs = [[-1,0], [1, 0], [0,-1], [0,1]]
+        
+        while queue:
+            d, x, y = queue.popleft()
+            if x == tr and y == tc:
+                return d
+            for direc in direcs:
+                nr = x + direc[0]
+                nc = y + direc[1]
+                if 0<=nr<len(forest) and 0<=nc<len(forest[0]) and (nr, nc) not in seen and forest[nr][nc]:
+                    queue.append((d + 1, nr, nc))
+                    seen.add((nr, nc))
+                    
+        return -1
+    
+    def cutOffTree(self, forest):
+        """
+        :type forest: List[List[int]]
+        :rtype: int
+        """
+        
+        if not forest:
+            return 0
+        
+        forest_list = []
+        for i in range(len(forest)):
+            for j in range(len(forest[0])):
+                if forest[i][j]:
+                    forest_list.append([forest[i][j], i, j])
+
+        forest_list.sort()
+        
+        ans, sr, sc, = 0, 0, 0
+        for _, tr, tc in forest_list:
+            d = self.bfs(forest, sr, sc, tr, tc)
+            if d<0:
+                return -1
+            ans += d
+            sr, sc = tr, tc
+        return ans
