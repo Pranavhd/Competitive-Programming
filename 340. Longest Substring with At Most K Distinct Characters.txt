@@ -1,0 +1,31 @@
+import collections
+
+class Solution(object):
+    def lengthOfLongestSubstringKDistinct(self, s, k):
+        """
+        :type s: str
+        :type k: int
+        :rtype: int
+        """
+        n = len(s)
+        if k == 0 or n == 0:
+            return 0
+        
+        l, r = 0, 0
+        d = {}
+        maxlen = 1
+        
+        while r < n:
+            d[s[r]] = d.get(s[r], set())
+            d[s[r]].add(r)
+            r += 1
+            
+            while len(d) == k + 1:
+                d[s[l]].pop()
+                if not d[s[l]]:
+                    del d[s[l]]
+                l += 1
+            
+            maxlen = max(maxlen, r - l)
+        
+        return maxlen

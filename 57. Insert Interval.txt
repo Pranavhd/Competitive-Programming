@@ -1,0 +1,24 @@
+class Solution(object):
+    def insert(self, intervals, newInterval):
+        """
+        :type intervals: List[List[int]]
+        :type newInterval: List[int]
+        :rtype: List[List[int]]
+        """
+        
+        i = 0
+        while i < len(intervals):
+            if newInterval[0] < intervals[i][0]:
+                break
+            i += 1
+                
+        intervals.insert(i, newInterval)
+        
+        stack = []
+        for i in range(len(intervals)):
+            if stack and stack[-1][1] >= intervals[i][0]:
+                stack[-1][1] = max(stack[-1][1], intervals[i][1])
+            else:
+                stack.append(intervals[i])
+                
+        return stack

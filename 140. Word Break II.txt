@@ -1,0 +1,29 @@
+class Solution(object):
+    
+    def wordBreak(self, s, wordDict):
+        """
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: List[str]
+        """
+        
+        dp = [[] for i in range(len(s)+1)]
+        set_ = set()
+        for word in wordDict:
+            set_.add(word)
+
+        dp[0].append([""])
+
+        for i in range(len(s)+1):
+            for j in range(i):
+                word = s[j:i]
+                if dp[j] and s[j:i] in set_:
+                    for each_list in dp[j]:
+                        temp_ = list(each_list)
+                        temp_.append(s[j:i])
+                        dp[i].append(list(temp_))
+
+        for ind, val in enumerate(dp[len(s)]):
+            dp[len(s)][ind] = " ".join(dp[len(s)][ind][1:])
+
+        return dp[len(s)]

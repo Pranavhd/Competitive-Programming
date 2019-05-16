@@ -1,0 +1,22 @@
+class Solution(object):
+    def maxSubArrayLen(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: int
+        """
+        
+        d = {}
+        cum_ = 0
+        maxlen = 0
+        
+        for ind, val in enumerate(nums):
+            cum_ += val
+            if cum_ == k:
+                maxlen = max(maxlen, ind + 1)
+            if cum_ - k in d:
+                maxlen = max(maxlen, ind - d[cum_ - k])
+            if cum_ not in d:
+                d[cum_] = ind
+                
+        return maxlen

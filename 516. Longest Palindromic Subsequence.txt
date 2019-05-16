@@ -1,0 +1,39 @@
+class Solution(object):
+    def longestPalindromeSubseq(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        
+        n = len(s)
+        dp = [[0 for i in range(len(s))] for j in range(len(s))]
+        
+        for i in range(n-1,-1,-1):
+            dp[i][i] = 1
+            for j in range(i+1, n):
+                if s[i] == s[j]:
+                    dp[i][j] = dp[i+1][j-1] + 2
+                else:
+                    dp[i][j] = max(dp[i][j-1], dp[i+1][j])
+        #print(dp)
+        return dp[0][len(s)-1]
+        
+        memo = [[-1 for i in range(len(s))] for j in range(len(s))]
+        
+        def helper(start, end):
+            if memo[start][end]!=-1:
+                return memo[start][end]
+            
+            if start == end:
+                return 1
+            if start > end:
+                return 0
+            
+            if s[start] == s[end]:
+                memo[start][end] = 2 + helper(start + 1, end -1)
+            else:
+                memo[start][end] = max(helper(start + 1, end), helper(start, end - 1))
+                
+            return memo[start][end]
+        
+        return helper(0, n-1)

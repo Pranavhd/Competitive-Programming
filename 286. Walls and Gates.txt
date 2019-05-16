@@ -1,0 +1,32 @@
+class Solution(object):
+    def wallsAndGates(self, rooms):
+        """
+        :type rooms: List[List[int]]
+        :rtype: None Do not return anything, modify rooms in-place instead.
+        """
+        queue = collections.deque()
+        if not rooms:
+            return 
+        
+        rows = len(rooms)
+        cols = len(rooms[0])
+        int_max = (1<<31)-1
+        print(int_max)
+        
+        for i in range(rows):
+            for j in range(cols):
+                if rooms[i][j] == 0:
+                    queue.append([i,j,0])
+                    
+        direcs = [[0,1],[0,-1],[1,0],[-1,0]]
+        
+        while queue:
+            x, y, d = queue.popleft()
+            for direc in direcs:
+                newx = x + direc[0]
+                newy = y + direc[1]
+                if 0<=newx<rows and 0<=newy<cols and rooms[newx][newy] == int_max and rooms[newx][newy]!=-1:
+                    rooms[newx][newy] = d + 1
+                    queue.append([newx, newy, d + 1])
+                    
+        
