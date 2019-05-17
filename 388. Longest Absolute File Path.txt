@@ -1,0 +1,22 @@
+class Solution:
+    def lengthLongestPath(self, input: str) -> int:
+        lines = input.split('\n')
+        #print(lines)
+        d = {}
+        max_ans = 0
+
+        for ind,each_line in enumerate(lines):
+            stripped = each_line.lstrip('\t')
+            curr_level = len(each_line) - len(stripped)
+            #print(curr_level)
+            d[curr_level] = stripped
+
+            if '.' in each_line:
+                curr_ans = len(stripped) + curr_level
+                curr_level -= 1
+                while curr_level >= 0:
+                    curr_ans += len(d[curr_level])
+                    curr_level -= 1
+                max_ans = max(max_ans, curr_ans)
+                
+        return max_ans
