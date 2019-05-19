@@ -1,0 +1,28 @@
+class Solution:
+    def alienOrder(self, words):
+        less, order = [], []
+        
+        for i in range(len(words)-1):
+            word1 = words[i]
+            word2 = words[i+1]
+            
+            for j in range(min(len(word1), len(word2))):
+                if word1[j]!=word2[j]:
+                    less.append(word1[j]+word2[j])
+                    break
+        
+        chars = set("".join(words))
+        #print(chars)
+        while less:
+            highest_set = chars - set(i[1] for i in less)
+            
+            if not highest_set:
+                return ""
+            highest = highest_set.pop()
+            order.append(highest)
+            #print(chars, type(chars))
+            #print(highest, type(highest))
+            chars.remove(highest)
+            less = [i for i in less if highest not in set(i)]
+            
+        return "".join(order) + "".join(chars)

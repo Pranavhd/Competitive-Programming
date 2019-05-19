@@ -1,0 +1,71 @@
+class DSU:
+    def __init__(self, N):
+        self.parent = list(range(N))
+        
+    def find(self, x):
+        if self.parent[x] != x:
+            self.parent[x] = self.find(self.parent[x])
+        return self.parent[x]
+    
+    def union(self, x, y):
+        xr = self.find(x)
+        yr = self.find(y)
+        self.parent[xr] = yr
+
+class Solution:
+    def areSentencesSimilarTwo(self, words1: List[str], words2: List[str], pairs: List[List[str]]) -> bool:
+        
+        if len(words1) != len(words2):
+            return False
+        '''
+        index = {}
+        count = itertools.count()
+        dsu = DSU(2 * len(pairs))
+        for pair in pairs:
+            for p in pair:
+                if p not in index:
+                    index[p] = next(count)
+            dsu.union(index[pair[0]], index[pair[1]])
+        
+        '''
+        count = 0
+        index = {}
+        dsu = DSU(2*len(pairs))
+        for pair in pairs:
+            for p in pair:
+                if p not in index:
+                    index[p] = count
+                    count += 1
+            dsu.union(index[pair[0]], index[pair[1]])
+        
+           
+        for w1, w2 in zip(words1, words2):
+            if w1 == w2:
+                continue
+            if w1 not in index or w2 not in index or not dsu.find(index[w1]) == dsu.find(index[w2]):
+                return False
+        return True
+        
+        '''
+        if len(words1) != len(words2):
+            return False
+        
+        graph = collections.defaultdict(list)
+        for w1, w2 in pairs:
+            graph[w1].append(w2)
+            graph[w2].append(w1)
+            
+        for w1, w2 in zip(words1, words2):
+            stack, seen = [w1], {w1}
+            while stack:
+                ele = stack.pop()
+                if ele == w2:
+                    break
+                for nei in graph[ele]:
+                    if nei not in seen:
+                        seen.add(nei)
+                        stack.append(nei)
+            else:
+                return False
+        return True
+        '''

@@ -1,0 +1,45 @@
+class Solution:
+    def nextGreaterElement(self, n: int) -> int:
+        
+        if n <= 11:
+            return -1
+        
+        
+        int_min, int_max = -(1<<31), (1<<31) - 1
+        
+        list_ = list(str(n))
+        
+        i, n = len(list_)-2, len(list_)
+        
+        #print(i, n)
+        while i >= 0 and list_[i] >= list_[i+1]:
+            #print(list_[i], list_[i+1], i)
+            i -= 1
+            
+        if i == -1:
+            #print("i is -1")
+            return -1
+        
+        j = i + 1
+        while j < n and list_[j] > list_[i]:
+            j += 1
+            
+        j -= 1
+        
+        #print(i, j)
+        def swap(i, j):
+            list_[i], list_[j] = list_[j], list_[i]
+        
+        swap(i, j)
+        
+        l = i + 1
+        r = n - 1
+        while l < r:
+            swap(l, r)
+            l += 1
+            r -= 1
+            
+        val = int("".join(list_))
+        if val > int_max:
+            return -1
+        return val

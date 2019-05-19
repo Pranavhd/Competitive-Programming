@@ -1,0 +1,42 @@
+class Solution:
+    def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
+        
+        ans = []
+        wordList = set(wordList)
+        #print(wordList)
+        if endWord not in wordList:
+            return []
+        
+        queue = collections.deque()
+        queue.append([beginWord])
+        
+        found = False
+        
+        chars = 'abcdefghijklmnopqrstuvwxyz'
+        
+        while queue:
+            len_ = len(queue)
+            
+            word_exclude = set()
+            for i in range(len_):
+                curr_list = queue.popleft()
+                last_word = curr_list[-1]
+                
+                for j in range(len(last_word)):
+                    p1, p2 = last_word[:j], last_word[j+1:]
+                    for char in chars:
+                        new_word = p1 + char + p2
+                        if new_word in wordList:
+                            new_list = list(curr_list)
+                            word_exclude.add(new_word)
+                            new_list.append(new_word)
+                            queue.append(new_list)
+                            if new_word == endWord:
+                                found = True
+                                ans.append((new_list))
+            if found:
+                break
+            for exclude in word_exclude:
+                wordList.remove(exclude)
+                
+        return ans

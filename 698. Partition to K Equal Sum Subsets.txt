@@ -1,0 +1,25 @@
+class Solution:
+    def canPartitionKSubsets(self, nums: List[int], k: int) -> bool:
+        sum_, maxi = sum(nums), max(nums)
+        
+        if sum_% k or maxi > sum_ // k:
+            return False
+        
+        visited = [False for i in range(len(nums))]
+        return self.can_do(nums, k, sum_//k, 0, visited, 0)
+    
+    def can_do(self, nums, k, target, cursum, visited, start):
+        if k == 0:
+            return True
+        if cursum > target:
+            return False
+        elif cursum == target:
+            return self.can_do(nums, k-1, target, 0, visited, 0)
+        else:
+            for j in range(start, len(nums)):
+                if not visited[j]:
+                    visited[j] = True
+                    if self.can_do(nums, k, target, cursum + nums[j], visited, j+1):
+                        return True
+                    visited[j] = False
+        return False

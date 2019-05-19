@@ -1,0 +1,25 @@
+class Solution:
+    def isMatch(self, s: str, p: str) -> bool:
+        p_curr, p_star, s_curr, s_star = 0, -1, 0, 0
+        
+        while s_curr < len(s):
+            if p_curr < len(p) and (p[p_curr] == '?' or p[p_curr] == s[s_curr]):
+                s_curr, p_curr = s_curr + 1, p_curr + 1
+            elif p_curr < len(p) and p[p_curr] == '*':
+                p_star = p_curr
+                s_star = s_curr
+                p_curr = p_star + 1
+            elif p_star != -1:
+                p_curr = p_star + 1
+                s_star = s_star + 1
+                s_curr = s_star
+            else:
+                return False
+            
+        while p_curr < len(p) and p[p_curr] == "*":
+            p_curr += 1
+            
+        #print(s_curr, p_curr)
+        if p_curr == len(p):
+            return True
+        return False
