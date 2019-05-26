@@ -1,0 +1,26 @@
+class WordDistance:
+
+    def __init__(self, words: List[str]):
+        self.d = collections.defaultdict(list)
+        for ind, word in enumerate(words):
+            self.d[word].append(ind)
+
+    def shortest(self, word1: str, word2: str) -> int:
+        l1 = self.d[word1]
+        l2 = self.d[word2]
+        
+        i, j = 0, 0
+        mini = float('inf')
+        
+        while i < len(l1) and j <len(l2):
+            mini = min(mini, abs(l2[j] - l1[i]))
+            if l1[i] < l2[j]:
+                i += 1
+            else:
+                j += 1
+                
+        return mini
+
+# Your WordDistance object will be instantiated and called as such:
+# obj = WordDistance(words)
+# param_1 = obj.shortest(word1,word2)

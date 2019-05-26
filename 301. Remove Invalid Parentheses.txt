@@ -1,0 +1,39 @@
+class Solution(object):
+    def isvalid(self, ele):
+        count = 0
+        for i in ele:
+            if i == '(':
+                count += 1
+            elif i == ')':
+                count -= 1
+            if count < 0:
+                return False
+        return count == 0
+    
+    def removeInvalidParentheses(self, s):
+        if not s:
+            return [""]
+        
+        ans, queue, visited, found = [], collections.deque(), set(), False
+        
+        queue.append(s)
+        visited.add(s)
+        
+        while queue:
+            ele = queue.popleft()
+            if self.isvalid(ele):
+                found = True
+                ans.append(ele)
+            
+            if found:
+                continue
+            
+            for i in range(len(ele)):
+                if ele[i] != '(' and ele[i] != ')':
+                    continue
+                new_string = ele[:i] + ele[i+1:]
+                if new_string not in visited:
+                    visited.add(new_string)
+                    queue.append(new_string)
+        
+        return ans

@@ -1,0 +1,16 @@
+class Solution:
+    def rearrangeBarcodes(self, barcodes):
+        counter = collections.Counter(barcodes)
+        
+        res = [0]*len(barcodes)
+        
+        i = 0
+        for value, key in sorted([value, key] for key, value in counter.items())[::-1]:
+            count = 0
+            while count < counter[key]:
+                count += 1
+                res[i] = key
+                i += 2
+                if i >= len(barcodes):
+                    i = 1
+        return res

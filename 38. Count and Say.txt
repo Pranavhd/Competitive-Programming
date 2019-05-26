@@ -1,0 +1,23 @@
+class Solution:
+    def countAndSay(self, n: int) -> str:
+        s = "1"
+        for i in range(n-1):
+            s = self.count(s)
+        return s
+            
+    def count(self, s):
+        c = s[0]
+        count = 1
+        ret = ""
+        i = 1
+        for i in range(1, len(s)):
+            if s[i] == c:
+                count += 1
+            else:
+                ret += str(count)
+                ret += c
+                c = s[i]
+                count = 1
+        ret += str(count)
+        ret += c
+        return ret
