@@ -1,0 +1,22 @@
+class Solution:
+    def numRookCaptures(self, board: List[List[str]]) -> int:
+        for i in range(8):
+            for j in range(8):
+                if board[i][j] == 'R':
+                    x0, y0 = i, j
+                    
+        direcs = [[1, 0],[-1, 0],[0, 1],[0, -1]]
+        ans = 0
+        
+        for direc in direcs:
+            x, y = x0 + direc[0], y0 + direc[1]
+            while 0<=x<8 and 0<=y<8:
+                if board[x][y] == 'p':
+                    ans += 1
+                    break
+                if board[x][y] == 'B':
+                    break
+                x += direc[0]
+                y += direc[1]
+                
+        return ans

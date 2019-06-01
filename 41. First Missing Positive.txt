@@ -1,0 +1,46 @@
+'''
+it has to be in 1 -> n + 1
+case 1 -> missing amongst n
+case 2 -> all till n there
+
+so if we originally have n + 1, then we can make it 1 => missing is not n + 1.. its less than n
+now we traverse, and negate those values
+'''
+
+
+class Solution:
+    def firstMissingPositive(self, nums: List[int]) -> int:
+        n = len(nums)
+        
+        if not nums:
+            return 1
+        # n + 1 ans if all nums = 1... n
+        
+        if 1 not in nums:
+            return 1
+        
+        # negatives and nums > n make them 1
+        for ind, val in enumerate(nums):
+            if nums[ind] <= 0 or nums[ind] > n:
+                nums[ind] = 1
+                
+        for ind, val in enumerate(nums):
+            curr_ele = abs(val)
+            if curr_ele == n:
+                nums[0] = -abs(nums[0])
+                continue
+            nums[curr_ele] = - abs(nums[curr_ele])
+            
+            
+        #print(nums)
+        i = 1
+        while i < n:
+            if nums[i] > 0:
+                return i
+            i += 1
+            
+        if nums[0] > 0:
+            return n
+        
+        return n + 1    
+        

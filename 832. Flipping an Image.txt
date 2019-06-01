@@ -1,0 +1,8 @@
+class Solution:
+    def flipAndInvertImage(self, A: List[List[int]]) -> List[List[int]]:
+        for ind, row in enumerate(A):
+            for col, val in enumerate(row):
+                row[col] = row[col] ^ 1
+            A[ind] = row[::-1]
+            
+        return A

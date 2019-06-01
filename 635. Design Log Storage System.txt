@@ -1,0 +1,27 @@
+class LogSystem:
+
+    def __init__(self):
+        self.indices = {'Year': 4, 'Month' : 7, 'Day': 10, 'Hour':13
+                       , 'Minute' : 16, 'Second' : 19}
+        self.logs = []
+
+    def put(self, id: int, timestamp: str) -> None:
+        self.logs.append((id, timestamp))
+
+    def retrieve(self, s: str, e: str, gra: str) -> List[int]:
+        index = self.indices[gra]
+        s, e = s[:index], e[:index]
+        ans = []
+        
+        for log in self.logs:
+            time = log[1]
+            if s <= time[:index] <= e:
+                ans.append(log[0])
+                
+        return ans
+
+
+# Your LogSystem object will be instantiated and called as such:
+# obj = LogSystem()
+# obj.put(id,timestamp)
+# param_2 = obj.retrieve(s,e,gra)

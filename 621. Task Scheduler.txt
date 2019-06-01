@@ -1,0 +1,22 @@
+class Solution:
+    def leastInterval(self, tasks: List[str], n: int) -> int:
+        c = collections.Counter(tasks)
+        
+        vals = [x[1] for x in c.items()]
+        
+        vals.sort()
+        idle = (n+1) * vals[-1]
+        
+        mct = 0
+        for key in c:
+            if c[key] == vals[-1]:
+                mct += 1
+        
+        i = len(vals) - 1
+        while i >=0:
+            idle -=  vals[i]
+            i -= 1
+            
+        if idle <= 0:
+            return len(tasks)
+        return len(tasks) + idle - (n - mct + 1)

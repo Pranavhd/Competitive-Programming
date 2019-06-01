@@ -1,0 +1,14 @@
+class Solution:
+    def selfDividingNumbers(self, left: int, right: int) -> List[int]:
+        
+        ans = []
+        
+        for i in range(left, right + 1):
+            stri = str(i)
+            j = 0
+            while j < len(stri) and stri[j]!='0' and i % int(stri[j]) == 0:
+                j += 1
+            if j == len(stri):
+                ans.append(i)
+        
+        return ans

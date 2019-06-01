@@ -1,0 +1,49 @@
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.next = None
+
+class Solution:
+    def plusOne(self, head: ListNode) -> ListNode:
+        
+        prev = head
+        stack = []
+        
+        while head:
+            stack.append(head)
+            head = head.next
+        
+        c = 1
+        while stack:
+            ele = stack.pop()
+            sum_ = ele.val + c
+            ele.val = sum_ % 10
+            c = sum_ // 10
+            
+        if c:
+            dummy = ListNode(1)
+            dummy.next = prev
+        else:
+            dummy = prev
+        return dummy
+        '''
+        dummy = ListNode(0)
+        
+        def getcarry(node):
+            if not node:
+                return 1
+            c = getcarry(node.next)
+            sum_ = c + node.val
+            node.val = sum_%10
+            return sum_//10
+        
+        c = getcarry(head)
+        if c:
+            dummy.next = ListNode(1)
+            dummy.next.next = head
+        else:
+            dummy.next = head
+            
+        return dummy.next
+        '''
