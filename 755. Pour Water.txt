@@ -1,0 +1,19 @@
+class Solution:
+    def pourWater(self, H: List[int], V: int, K: int) -> List[int]:
+        for v in range(V):
+            flag = 0
+            for d in (-1, 1):
+                best = K
+                i = K
+                while 0<=i + d<len(H) and H[i+d]<=H[i]:
+                    if H[i + d] < H[i]:
+                        best = i + d
+                    i = i + d
+                if best != K:
+                    H[best] += 1
+                    flag = 1
+                    break
+            if flag == 0:
+                H[K] += 1
+        return H
+                    
