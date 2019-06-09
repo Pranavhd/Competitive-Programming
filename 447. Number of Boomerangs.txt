@@ -1,0 +1,11 @@
+class Solution:
+    def numberOfBoomerangs(self, points: List[List[int]]) -> int:
+        ans = 0
+        for p in points:
+            d = {}
+            for q in points:
+                x, y = p[0] - q[0], p[1] - q[1]
+                d[x*x + y*y] = d.get(x*x + y*y, 0) + 1
+            for key in d:
+                ans += d[key] * (d[key] - 1)
+        return ans

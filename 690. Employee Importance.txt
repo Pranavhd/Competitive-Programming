@@ -1,0 +1,60 @@
+"""
+# Employee info
+class Employee:
+    def __init__(self, id, importance, subordinates):
+        # It's the unique id of each node.
+        # unique id of this employee
+        self.id = id
+        # the importance value of this employee
+        self.importance = importance
+        # the id of direct subordinates
+        self.subordinates = subordinates
+"""
+class Solution:
+    def getImportance(self, employees, id):
+        """
+        :type employees: Employee
+        :type id: int
+        :rtype: int
+        """
+        hash_ = {}
+        for e in employees:
+            hash_[e.id] = e
+            
+        def dfs(eid):
+            importance = hash_[eid].importance
+            for sub in hash_[eid].subordinates:
+                importance += dfs(sub)
+            return importance
+            
+        return dfs(id)
+
+/*
+// Employee info
+class Employee {
+    // It's the unique id of each node;
+    // unique id of this employee
+    public int id;
+    // the importance value of this employee
+    public int importance;
+    // the id of direct subordinates
+    public List<Integer> subordinates;
+};
+*/
+class Solution {
+    Map<Integer, Employee> emap = new HashMap();
+    public int getImportance(List<Employee> employees, int id) {
+        for (Employee e : employees){
+            emap.put(e.id, e);
+        }
+        return dfs(id);
+    }
+    
+    public int dfs(int eid){
+        Employee e = emap.get(eid);
+        int ans = e.importance;
+        for (Integer sub : e.subordinates)
+            ans += dfs(sub);
+        return ans;
+    }
+}

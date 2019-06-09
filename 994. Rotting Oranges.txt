@@ -1,0 +1,22 @@
+class Solution:
+    def orangesRotting(self, grid: List[List[int]]) -> int:
+        direcs = [[-1, 0],[0, 1],[0, -1],[1, 0]]
+        
+        queue = collections.deque()
+        for indx, row in enumerate(grid):
+            for indy, col in enumerate(row):
+                if grid[indx][indy] == 2:
+                    queue.append([indx, indy, 0])
+                    
+        cd = 0
+        while queue:
+            cx, cy, cd = queue.popleft()
+            for direc in direcs:
+                nx, ny = cx + direc[0], cy + direc[1]
+                if 0<=nx<len(grid) and 0<=ny<len(grid[0]) and grid[nx][ny] == 1:
+                    queue.append([nx, ny, cd + 1])
+                    grid[nx][ny] = 2
+                    
+        if any(1 in row for row in grid):
+            return -1
+        return cd

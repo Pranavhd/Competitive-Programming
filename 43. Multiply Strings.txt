@@ -1,0 +1,25 @@
+class Solution:
+    def multiply(self, num1: str, num2: str) -> str:
+        m, n = len(num1), len(num2)
+        
+        dp = [0] * (m + n)
+        
+        for i in range(m-1, -1, -1):
+            for j in range(n-1, -1, -1):
+                mul = int(num1[i]) * int(num2[j])
+                p1, p2 = i + j, i + j + 1
+                
+                dp[p1] += (mul + dp[p2])//10
+                dp[p2] = (dp[p2] + mul) % 10
+            
+        
+        dp = [str(i) for i in dp]
+        
+        i = 0
+        while i < m+n and dp[i] == '0':
+            i += 1
+                
+        if i != m+n:
+            return "".join(dp[i:])
+        else:
+            return "0"

@@ -1,0 +1,68 @@
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    def isvalid(self, root, mini, maxi):
+        if not root:    return True
+        if root.val <= mini or root.val >= maxi:    return False
+        return self.isvalid(root.left, mini, root.val) and self.isvalid(root.right, root.val, maxi)
+    
+    def count(self, root):
+        if not root:    return 0
+        return 1 + self.count(root.left) + self.count(root.right)
+    
+    def islarge(self, root):
+        if not root:
+            return ((1<<31), -(1<<31), 0)
+        left = self.islarge(root.left)
+        right = self.islarge(root.right)
+        if root.val > left[1] and root.val < right[0]:
+            return (min(left[0], root.val), max(right[1], root.val), 1 + left[2] + right[2])
+        else:
+            return (-(1<<31), (1<<31), max(left[2], right[2]))
+    
+    def largestBSTSubtree(self, root: TreeNode) -> int:
+        return self.islarge(root)[2]
+
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public int count(TreeNode root){
+        if (root == null)   return 0;
+        return 1 + count(root.left) + count(root.right);
+    }
+    
+    public boolean isvalid(TreeNode root, Integer min, Integer max){
+        if(root == null)    return true;
+        if(min >= root.val || root.val >= max)  return false;
+        return isvalid(root.left, min, root.val) && isvalid(root.right, root.val, max);
+    }
+    
+    public int[] islarge(TreeNode root){
+        if(root == null)
+            return new int[]{Integer.MAX_VALUE, Integer.MIN_VALUE, 0};
+        int[] left = islarge(root.left);
+        int[] right = islarge(root.right);
+        if (left[1] < root.val && root.val < right[0])
+            return new int[]{Math.min(left[0], root.val), Math.max(right[1], root.val), 1 + left[2] + right[2]};
+        else
+            return new int[]{Integer.MIN_VALUE, Integer.MAX_VALUE, Math.max(right[2], left[2])};
+    }
+    
+    public int largestBSTSubtree(TreeNode root) {
+        int[] res = islarge(root);
+        return res[2];
+    }
+}

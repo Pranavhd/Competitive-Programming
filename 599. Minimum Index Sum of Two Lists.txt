@@ -1,0 +1,41 @@
+class Solution:
+    def findRestaurant(self, list1: List[str], list2: List[str]) -> List[str]:
+        d1, d2 = {}, {}
+        for i in range(len(list1)):
+            d1[list1[i]] = i
+        
+        mini = float('inf')
+        for j in range(len(list2)):
+            if list2[j] in d1:
+                d2[j + d1[list2[j]]] = d2.get(j + d1[list2[j]], [])
+                d2[j + d1[list2[j]]].append(list2[j])
+                mini = min(mini, j + d1[list2[j]])
+        
+        return d2[mini]
+
+class Solution {
+    public String[] findRestaurant(String[] list1, String[] list2) {
+        Map<String, Integer> map1 = new HashMap<>();
+        Map<Integer, String> map2 = new HashMap<>();
+        
+        for(int i = 0; i < list1.length; i++){
+            map1.put(list1[i], i);
+        }
+        int min = Integer.MAX_VALUE;
+        List<String> ans = new ArrayList<>();
+        for(int j = 0; j < list2.length; j++){
+            if (map1.containsKey(list2[j])){
+                int sum = j + map1.get(list2[j]);
+                if(sum < min){
+                    ans.clear();
+                    ans.add(list2[j]);
+                    min = sum;
+                }
+                else if (sum == min)
+                    ans.add(list2[j]);
+            }
+        }
+        
+        return ans.toArray(new String[ans.size()]);
+    }
+}
