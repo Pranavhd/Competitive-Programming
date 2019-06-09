@@ -1,0 +1,32 @@
+class Solution:
+    def calculate(self, s: str) -> int:
+        stack, num, sign = [], 0, '+'
+        
+        i = 0
+        while i < len(s):
+            if s[i].isdigit():
+                num = num*10 + ord(s[i]) - ord('0')
+            elif s[i]=='(':
+                start, count = i, 1
+                i += 1
+                while count!=0:
+                    if s[i] == ')':
+                        count -= 1
+                    if s[i] == '(':
+                        count += 1
+                    i += 1
+                num = self.calculate(s[start+1:i-1])
+                i -= 1
+            if i == len(s) - 1 or s[i] in ['+','-','*','/']:
+                if sign == '+':
+                    stack.append(num)
+                elif sign == '-':
+                    stack.append(-num)
+                elif sign == '*':
+                    stack.append(stack.pop()*num)
+                else:
+                    stack.append(int(stack.pop()/num))
+                num, sign = 0, s[i]
+            i += 1
+                
+        return sum(stack)
