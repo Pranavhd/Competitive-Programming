@@ -1,0 +1,67 @@
+"""
+# Definition for a Node.
+class Node:
+    def __init__(self, val, next):
+        self.val = val
+        self.next = next
+"""
+class Solution:
+    def insert(self, head: 'Node', val: int) -> 'Node':
+        new = Node(val, None)
+        
+        if not head:
+            return new
+        
+        node = head
+        while True:
+            if node.val > node.next.val and (val >= node.val or val <= node.next.val):
+                break
+            elif node.val <= val <= node.next.val:
+                break
+            elif node.next == head:
+                break
+            node = node.next
+            
+        new.next = node.next
+        node.next = new
+        return head
+
+
+
+/*
+// Definition for a Node.
+class Node {
+    public int val;
+    public Node next;
+
+    public Node() {}
+
+    public Node(int _val,Node _next) {
+        val = _val;
+        next = _next;
+    }
+};
+*/
+class Solution {
+    public Node insert(Node head, int val) {
+        Node newn = new Node(val, null);
+        
+        if (head == null)
+            return newn;
+        
+        Node node = head;
+        while (true){
+            if (node.val > node.next.val && (val > node.val || val < node.next.val))
+                break;
+            else if (node.val <= val && val <= node.next.val)
+                break;
+            else if (node.next == head)
+                break;
+            node = node.next;
+        }
+        
+        newn.next = node.next;
+        node.next = newn;
+        return head;
+    }
+}

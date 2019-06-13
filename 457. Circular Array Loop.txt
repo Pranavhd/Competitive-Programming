@@ -1,0 +1,49 @@
+class Solution:
+    def circularArrayLoop(self, nums: List[int]) -> bool:
+        n = len(nums)
+        for ind, val in enumerate(nums):
+            link = 0
+            j = ind
+            forward = nums[j]
+            while True:
+                if forward * nums[j] < 0 :
+                    break
+                nextj = (j + nums[j] + n) % n
+                if nextj == j:
+                    break
+                link += 1
+                j = nextj
+                if link > n:
+                    return True
+        return False
+
+
+
+
+class Solution {
+    public boolean circularArrayLoop(int[] nums) {
+        int n = nums.length;
+        for (int i = 0; i < n ; i++){
+            int j = i, link = 0, forward = nums[i]/Math.abs(nums[i]);
+            while(true){
+                if (forward * nums[j] < 0)
+                    break;
+                int nextj = j + nums[j];
+                if(nextj < 0)
+                {
+                    int mul = Math.abs(nextj)/n;
+                    nextj += n*(mul+1);
+                }
+                nextj = nextj % n;
+                if(nextj == j)
+                    break;
+                j = nextj;
+                link += 1;
+                if(link > n){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+}

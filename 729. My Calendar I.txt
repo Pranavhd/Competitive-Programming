@@ -1,0 +1,36 @@
+class Node:
+    def __init__(self, start, end):
+        self.s = start
+        self.e = end
+        self.left = None
+        self.right = None
+
+class MyCalendar:
+
+    def __init__(self):
+        self.root = None
+        
+    def helper(self, s, e, node):
+        if s >= node.e:
+            if not node.right:
+                node.right = Node(s, e)
+                return True
+            return self.helper(s, e, node.right)
+        elif e <= node.s:
+            if not node.left:
+                node.left = Node(s, e)
+                return True
+            return self.helper(s, e, node.left)
+        else:
+            return False
+
+    def book(self, start: int, end: int) -> bool:
+        if not self.root:
+            self.root = Node(start, end)
+            return True
+        return self.helper(start, end, self.root)
+
+
+# Your MyCalendar object will be instantiated and called as such:
+# obj = MyCalendar()
+# param_1 = obj.book(start,end)
