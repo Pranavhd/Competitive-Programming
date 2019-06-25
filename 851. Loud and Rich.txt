@@ -1,0 +1,21 @@
+class Solution:
+    def loudAndRich(self, richer: List[List[int]], quiet: List[int]) -> List[int]:
+        n = len(quiet)
+        graph = collections.defaultdict(list)
+        for x, y in richer:
+            graph[y].append(x)
+            
+        answer = [None]*n
+        
+        def dfs(i, answer):
+            if answer[i] == None:
+                answer[i] = i
+                for child in graph[i]:
+                    cand = dfs(child, answer)
+                    if quiet[cand] < quiet[answer[i]]:
+                        answer[i] = cand
+            return answer[i]
+        
+        for i in range(n):
+            answer[i] = dfs(i, answer)
+        return answer

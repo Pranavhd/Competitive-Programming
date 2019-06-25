@@ -1,0 +1,36 @@
+class TopVotedCandidate:
+
+    def __init__(self, persons: List[int], times: List[int]):
+        self.A = []
+        leader, m = None, 0
+        count = {}
+        
+        for i in range(len(persons)):
+            count[persons[i]] = count.get(persons[i], 0) + 1
+            c = count[persons[i]]
+            
+            if c >= m:
+                if persons[i] != leader:
+                    leader = persons[i]
+                    self.A.append((times[i], leader))
+                m = c
+        #print(self.A)
+
+    def q(self, t: int) -> int:
+        hi = len(self.A) - 1
+        lo = 0
+        
+        #print(t)
+        while lo < hi:
+            mid = lo + 1 + (hi - lo)//2
+            if self.A[mid][0] > t:
+                hi = mid - 1
+            else:
+                lo = mid
+        #print("return ", str(self.A[lo][1]))
+        return self.A[lo][1]
+
+
+# Your TopVotedCandidate object will be instantiated and called as such:
+# obj = TopVotedCandidate(persons, times)
+# param_1 = obj.q(t)

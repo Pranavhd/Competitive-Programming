@@ -3,24 +3,33 @@ import heapq
 class Solution:
     def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
         
-        if not intervals:
-            return 0
+        # By start
+        end = -float('inf')
+        erase = 0
         
-        def fun(interval):
-            return interval[0]
+        def func(x):
+            return x[0]
+        intervals.sort(key = func)
         
-        intervals.sort(key = fun)
-        
-        prev, count = 0, 0
-        
-        for i in range(1, len(intervals)):
-            if intervals[i][0] >= intervals[prev][1]:
-                prev = i
+        for i in range(len(intervals)):
+            if intervals[i][0] >= end:
+                end = intervals[i][1]
             else:
-                if intervals[i][1] > intervals[prev][1]:
-                    prev = prev
-                else:
-                    prev = i
-                count +=1
-                
-        return count
+                erase += 1
+                end = min(end, intervals[i][1])
+        return erase
+        
+        # By end
+        end = -float('inf')
+        erase = 0
+        
+        def func(x):
+            return x[1]
+        intervals.sort(key = func)
+        
+        for i in range(len(intervals)):
+            if intervals[i][0] >= end:
+                end = intervals[i][1]
+            else:
+                erase += 1
+        return erase

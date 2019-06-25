@@ -1,0 +1,20 @@
+class Solution(object):
+    def back(self, c):
+        sum = 0
+        for key in c:
+            if c[key] == 0:
+                continue
+            sum += 1
+            c[key] -= 1
+            sum += self.back(c)
+            c[key] += 1
+        return sum
+    
+    def numTilePossibilities(self, tiles):
+        """
+        :type tiles: str
+        :rtype: int
+        """
+        
+        c = collections.Counter(tiles)
+        return self.back(c)

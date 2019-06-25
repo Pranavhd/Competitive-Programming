@@ -1,0 +1,16 @@
+'''
+'a' + ('c' + 9 - 'a' % 26)
+
+'''
+
+class Solution:
+    def shiftingLetters(self, S: str, shifts: List[int]) -> str:
+        n = len(S)
+        ans = ""
+        sum_ = 0
+        
+        for i in range(n-1, -1, -1):
+            sum_ += shifts[i]
+            ans = chr(ord('a') + (ord(S[i]) - ord('a') + sum_)%26) + ans
+            
+        return ans

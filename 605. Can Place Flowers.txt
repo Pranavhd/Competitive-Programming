@@ -1,0 +1,46 @@
+class Solution:
+    def canPlaceFlowers(self, flowerbed, n):
+        count = 0
+        i = 0
+        while i < len(flowerbed):
+            if flowerbed[i] == 0 and (i == 0 or flowerbed[i-1] == 0) and (i == len(flowerbed) -1 or flowerbed[i + 1] == 0):
+                flowerbed[i] = 1
+                count += 1
+            if count >= n:
+                return True
+            i += 1
+        return False
+        
+        
+        
+        len_flower = len(flowerbed)
+        ans, k = 0, 0
+        
+        if flowerbed.count(1) == 0:
+            return (len_flower+1)//2 >= n
+        
+        for i in range(len_flower):
+            if flowerbed[i] == 1:
+                ans += int((k-1)/2)
+                k = 0
+            else:
+                k += 1
+
+        k = 0
+        for i in range(len_flower):
+            if flowerbed[i] == 1:
+                ans += int(k/2)
+                ans -= int((k-1)/2)
+                break
+            else:
+                k += 1
+            
+        k = 0    
+        for i in range(len_flower -1, -1, -1):
+            if flowerbed[i] == 1:
+                ans += int(k/2)
+                break
+            else:
+                k += 1
+        
+        return ans >= n

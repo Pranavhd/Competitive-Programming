@@ -1,0 +1,23 @@
+class Solution:
+    def findMinArrowShots(self, points: List[List[int]]) -> int:
+        n = len(points)
+        
+        if n == 0:
+            return 0
+        
+        #''' Based on end time
+        def func(x):
+            return x[1]
+        
+        points.sort(key = func)
+        arrowPos = points[0][1]
+        arrowCnt = 1
+        
+        for i in range(1, n):
+            if points[i][0] <= arrowPos:
+                continue
+            arrowCnt += 1
+            arrowPos = points[i][1]
+        
+        return arrowCnt
+        #'''

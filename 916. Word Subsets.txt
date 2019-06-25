@@ -1,0 +1,18 @@
+class Solution:
+    def wordSubsets(self, A: List[str], B: List[str]) -> List[str]:
+        def count(word):
+            ans = [0]*26
+            for letter in word:
+                ans[ord(letter) - ord('a')] += 1
+            return ans
+        
+        b = [0]*26
+        for x in B:
+            for i, q in enumerate(count(x)):
+                b[i] = max(b[i], q)
+        
+        ans = []
+        for a in A:
+            if all(x >= y for x, y in zip(count(a), b)):
+                ans.append(a)
+        return ans

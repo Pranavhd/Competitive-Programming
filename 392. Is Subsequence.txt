@@ -1,0 +1,13 @@
+class Solution:
+    def isSubsequence(self, s: str, t: str) -> bool:
+        stack = []
+        for i in range(len(s)-1, -1, -1):
+            stack.append(s[i])
+            
+        j = 0
+        while stack and j < len(t):
+            if t[j] == stack[-1]:
+                stack.pop()
+            j += 1
+        
+        return not stack

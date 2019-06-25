@@ -1,0 +1,29 @@
+class Solution:
+    def generate(self, next_list, idx, curr, bottom, d):
+        if idx == len(bottom) - 1:
+            next_list.append(curr)
+            return
+        for elements in d[bottom[idx:idx + 2]]:
+            curr += elements
+            self.generate(next_list, idx+1, curr, bottom, d)
+            curr = curr[:-1]
+    
+    def helper(self, bottom, d):
+        if len(bottom) == 1:
+            return True
+        for i in range(len(bottom) - 1):
+            if bottom[i:i+2] not in d:
+                return False
+        next_list = []
+        self.generate(next_list, 0, "", bottom, d)
+        for each_bottom in next_list:
+            if self.helper(each_bottom, d):
+                return True
+        return False
+    
+    def pyramidTransition(self, bottom: str, allowed: List[str]) -> bool:
+        d = collections.defaultdict(list)
+        for allow in allowed:
+            d[allow[:2]].append(allow[2])
+            
+        return self.helper(bottom, d)
